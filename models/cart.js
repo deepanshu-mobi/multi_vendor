@@ -1,17 +1,34 @@
 'use strict';
-const { Model } = require('sequelize');
-  class Cart extends Model {
-    static associate(models) {
-      // define association here
-    }
-  }
+const { Model, DataTypes } = require('sequelize');
+const sequelize  = require('../config/db')
+
+  class Cart extends Model {}
 
 Cart.init({
-    customerId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    totalQuantity: DataTypes.INTEGER,
-    totalPrice: DataTypes.INTEGER
+  cartId: {
+    allowNull: false,
+    autoIncrement: true,
+    primaryKey: true,
+    type: DataTypes.INTEGER
+  },
+  customerId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  productId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  totalQuantity: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  totalPrice: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
   }, {
     sequelize,
+    tableName: 'cart'
 });
 module.exports = Cart;

@@ -1,13 +1,14 @@
 const Sequelize = require('sequelize')
 const env = process.env.NODE_ENV || 'development'
-const Config = require('./config.properties')[env]
+const Config = require('../config/config')[env]
 
 const sequelize = new Sequelize(
     Config.database,
     Config.username,
     Config.password,
     {
-        ...Config
+        ...Config,
+        logging: true
     }
 )
 
@@ -22,5 +23,4 @@ const auth = async() => {
 }
 
 auth()
-
-module.exports = sequelize
+module.exports = sequelize;

@@ -1,25 +1,28 @@
 'use strict';
-/** @type {import('sequelize-cli').Migration} */
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Admins', {
-      id: {
+    await queryInterface.createTable('admins', {
+      adminId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(30),
+        allowNull: false
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(30),
+        unique: true
       },
       phoneNo: {
         type: Sequelize.INTEGER
       },
       role: {
-        type: Sequelize.ENUM
+        type: Sequelize.ENUM('ADMIN', 'SUPER_ADMIN'),
+        defaultValue: 'ADMIN'
       },
       createdAt: {
         allowNull: false,
@@ -32,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Admins');
+    await queryInterface.dropTable('admins');
   }
 };

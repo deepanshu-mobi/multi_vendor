@@ -1,19 +1,38 @@
 'use strict';
-const { Model } = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
+const sequelize  = require('../config/db')
 
-  class Order extends Model {
-    static associate(models) {
-      // define association here
-    }
-  }
+  class Order extends Model {}
 
   Order.init({
-    customerId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER,
-    totalPrice: DataTypes.INTEGER,
-    totalQuantity: DataTypes.INTEGER,
-    orderStatus: DataTypes.ENUM
-  }, {
+    orderId: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: DataTypes.INTEGER
+    },
+    customerId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    productId: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    totalPrice: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    totalQuantity: {
+      type: DataTypes.INTEGER
+    },
+    orderStatus: {
+      type: DataTypes.ENUM('PENDING', 'APPROVED', 'CANCELLED', 'FAILED'),
+      defaultValue: 'PENDING'
+    },
+  }, 
+  {
     sequelize,
+    tableName: 'order'
   });
 module.exports = Order;
