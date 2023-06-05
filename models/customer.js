@@ -23,7 +23,7 @@ const sequelize  = require('../config/db')
     },
   }, {
     sequelize,
-    tableName: 'customer'
+    tableName: 'customers'
   });
 
   module.exports = Customer

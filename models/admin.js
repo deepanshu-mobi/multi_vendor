@@ -30,7 +30,7 @@ class Admin extends Model {}
   },
   {
     sequelize,
-    tableName: 'admin'
+    tableName: 'admins'
   }
   );
 

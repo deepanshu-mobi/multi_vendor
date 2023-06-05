@@ -29,6 +29,6 @@ Cart.init({
   },
   }, {
     sequelize,
-    tableName: 'cart'
+    tableName: 'carts'
 });
 module.exports = Cart;

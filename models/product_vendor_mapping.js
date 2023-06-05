@@ -16,6 +16,6 @@ Product_vendor_ids.init({
   }, 
   {
     sequelize,
-    modelName: 'Product_vendor_ids',
+    modelName: 'product_vendor_mappings',
   });
 module.exports = Product_vendor_ids;

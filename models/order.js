@@ -33,6 +33,6 @@ const sequelize  = require('../config/db')
   }, 
   {
     sequelize,
-    tableName: 'order'
+    tableName: 'orders'
   });
 module.exports = Order;
