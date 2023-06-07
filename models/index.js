@@ -1,27 +1,27 @@
-const customer = require('./customer');
-const user = require('./user');
-const product = require('./product');
-const cart = require('./cart');
-const order = require('./order')
-const productVendorMapping = require('./product_vendor_mapping')
+const Customer = require('./customer');
+const User = require('./user');
+const Product = require('./product');
+const Cart = require('./cart');
+const Order = require('./order')
+const ProductVendorMapping = require('./product_vendor_mapping')
 
 //------------ Relationship mapping -------------------------------
-customer.hasMany(order, { foreignKey: 'customerId' });
-product.hasMany(order, { foreignKey: 'productId' });
-customer.hasMany(cart, { foreignKey: 'customerId' });
-product.hasMany(cart, { foreignKey: 'productId' });
+Customer.hasMany(Order, { foreignKey: 'customerId' });
+Product.hasMany(Order, { foreignKey: 'productId' });
+Customer.hasMany(Cart, { foreignKey: 'customerId' });
+Product.hasMany(Cart, { foreignKey: 'productId' });
 
-user.belongsTo(product,{through: productVendorMapping,foreignKey: 'userId'});
-product.belongsTo(user,{through: productVendorMapping,foreignKey: 'productId'});
+User.belongsTo(Product,{through: ProductVendorMapping,foreignKey: 'userId'});
+Product.belongsTo(User,{through: ProductVendorMapping,foreignKey: 'productId'});
 
 
 
 
 module.exports = {
-  customer,
-  user,
-  product,
-  cart,
-  order,
-  productVendorMapping,
+  Customer,
+  User,
+  Product,
+  Cart,
+  Order,
+  ProductVendorMapping,
 }
