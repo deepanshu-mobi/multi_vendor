@@ -17,11 +17,11 @@ product.belongsTo(user,{through: product_vendor_mapping,foreignKey: 'productId'}
 
 
 
-// module.exports = {
-//   customer,
-//   user,
-//   product,
-//   cart,
-//   order,
-//   product_vendor_mapping,
-// }
+module.exports = {
+  customer,
+  user,
+  product,
+  cart,
+  order,
+  product_vendor_mapping,
+}
