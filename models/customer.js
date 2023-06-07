@@ -16,7 +16,9 @@ const sequelize  = require('../config/db')
       allowNull: false
     },
     email: {
-      type: DataTypes.STRING(30)
+      type: DataTypes.STRING(30),
+      allowNull: false,
+      unique: true
     },
     password: {
       type: DataTypes.STRING,

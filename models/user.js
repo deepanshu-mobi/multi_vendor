@@ -19,7 +19,8 @@ class User extends Model {}
     },
     email: {
       type: DataTypes.STRING(30),
-      unique: true
+      allowNull: false,
+      unique: true,
     },
     password: {
       type: DataTypes.STRING,
