@@ -18,6 +18,14 @@ const sequelize  = require('../config/db')
     email: {
       type: DataTypes.STRING(30)
     },
+    password: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
+    isEmailVerified:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     phoneNo: {
       type: DataTypes.INTEGER
     },

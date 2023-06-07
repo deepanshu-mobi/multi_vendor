@@ -1,9 +1,11 @@
 'use strict';
 
+const constants = require('../utils/constant')
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('admins', {
-      adminId: {
+    await queryInterface.createTable('users', {
+      userId: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -29,8 +31,8 @@ module.exports = {
         defaultValue: false
       },
       role: {
-        type: Sequelize.ENUM('ADMIN', 'SUPER_ADMIN','VENDOR'),
-        defaultValue: 'ADMIN'
+        type: Sequelize.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),
+        defaultValue: constants.userType.vendor
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +45,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('admins');
+    await queryInterface.dropTable('users');
   }
 };

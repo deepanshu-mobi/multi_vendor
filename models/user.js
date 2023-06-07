@@ -1,12 +1,13 @@
 'use strict';
 const { Model, DataTypes} = require('sequelize');
+const constants = require('../utils/constant')
 const sequelize  = require('../config/db')
 
-class Admin extends Model {}
+class User extends Model {}
 
-  Admin.init(
+  User.init(
   {
-    adminId: {
+    userId: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -20,19 +21,27 @@ class Admin extends Model {}
       type: DataTypes.STRING(30),
       unique: true
     },
+    password: {
+      type: DataTypes.STRING(50),
+      allowNull: false
+    },
     phoneNo: {
       type: DataTypes.INTEGER
     },
+    isEmailVerified:{
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     role: {
-      type: DataTypes.ENUM('ADMIN', 'SUPER_ADMIN'),
-      defaultValue: 'ADMIN'
+      type: DataTypes.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),
+      defaultValue: constants.userType.vendor
     },
   },
   {
     sequelize,
-    tableName: 'admins'
+    tableName: 'users'
   }
   );
 
-  module.exports = Admin
+  module.exports = User
 

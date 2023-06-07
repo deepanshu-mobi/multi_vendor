@@ -8,7 +8,7 @@ const sequelize = new Sequelize(
     Config.password,
     {
         ...Config,
-        logging: false
+        logging: true
     }
 )
 
