@@ -2,9 +2,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize  = require('../config/db')
 
-class Product_vendor_ids extends Model {}
+class product_vendor_mapping extends Model {}
 
-Product_vendor_ids.init({
+product_vendor_mapping.init({
     productId: {
       type: DataTypes.INTEGER,
       allowNull: false
@@ -18,4 +18,4 @@ Product_vendor_ids.init({
     sequelize,
     modelName: 'product_vendor_mappings',
   });
-module.exports = Product_vendor_ids;
+module.exports = product_vendor_mapping;

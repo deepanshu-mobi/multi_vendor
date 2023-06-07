@@ -17,11 +17,19 @@ module.exports = {
         type: Sequelize.STRING(30),
         unique: true
       },
+      password: {
+        type: Sequelize.STRING(50),
+        allowNull: false
+      },
       phoneNo: {
         type: Sequelize.INTEGER
       },
+      isEmailVerified:{
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
+      },
       role: {
-        type: Sequelize.ENUM('ADMIN', 'SUPER_ADMIN'),
+        type: Sequelize.ENUM('ADMIN', 'SUPER_ADMIN','VENDOR'),
         defaultValue: 'ADMIN'
       },
       createdAt: {

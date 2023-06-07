@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('product_vendor_mapping', {
+    await queryInterface.createTable('product_vendor_mappings', {
       productVendorId: {
         allowNull: false,
         autoIncrement: true,
@@ -28,6 +28,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('product_vendor_mapping');
+    await queryInterface.dropTable('product_vendor_mappings');
   }
 };
