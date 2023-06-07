@@ -20,11 +20,11 @@ module.exports = {
         unique: true
       },
       password: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false
       },
       phoneNo: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       isEmailVerified:{
         type: Sequelize.BOOLEAN,

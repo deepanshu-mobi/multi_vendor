@@ -19,7 +19,7 @@ const sequelize  = require('../config/db')
       type: DataTypes.STRING(30)
     },
     password: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false
     },
     isEmailVerified:{
@@ -27,7 +27,7 @@ const sequelize  = require('../config/db')
       defaultValue: false
     },
     phoneNo: {
-      type: DataTypes.INTEGER
+      type: DataTypes.BIGINT
     },
   }, {
     sequelize,

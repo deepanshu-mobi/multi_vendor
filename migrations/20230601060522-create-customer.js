@@ -17,7 +17,7 @@ module.exports = {
         type: Sequelize.STRING(30)
       },
       password: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false
       },
       isEmailVerified:{
@@ -25,7 +25,7 @@ module.exports = {
         defaultValue: false
       },
       phoneNo: {
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT
       },
       createdAt: {
         allowNull: false,

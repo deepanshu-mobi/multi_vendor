@@ -22,13 +22,13 @@ class User extends Model {}
       unique: true
     },
     password: {
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING,
       allowNull: false
     },
     phoneNo: {
-      type: DataTypes.INTEGER
+      type: DataTypes.BIGINT
     },
-    isEmailVerified:{
+    isEmailVerified: {
       type: DataTypes.BOOLEAN,
       defaultValue: false
     },
