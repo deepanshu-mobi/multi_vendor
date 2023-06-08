@@ -1,12 +1,13 @@
 const customerService = require('../services/customerService')
-const { StatusCodes } = require('http-status-codes')
+const { Customer } = require('../models')
+
 
 exports.register = async(req, res) => {
     
-    const customer = await customerService.createCustomer(req.body)
-    const response = {
-        customerId: customer.customerId,
-        name: customer.name
+    const { email } = req.body
+    const user = await Customer.findOne({ where: { email } }) ;
+    if(user){
+        return res.render('customer', { formData: req.body, errorMessage: 'Email already exist'})
     }
-    return res.status(StatusCodes.CREATED).send(response)
+    const customer = await customerService.createCustomer(req.body)
 }
