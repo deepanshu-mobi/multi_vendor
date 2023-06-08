@@ -1,5 +1,5 @@
 'use strict';
-const { Model, DataTypes} = require('sequelize');
+const { Model, DataTypes } = require('sequelize');
 const constants = require('../utils/constant')
 const sequelize  = require('../config/db')
 
@@ -30,8 +30,11 @@ class User extends Model {}
       type: DataTypes.BIGINT
     },
     isEmailVerified: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    token: {
+      type: DataTypes.STRING
     },
     role: {
       type: DataTypes.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),

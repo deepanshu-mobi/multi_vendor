@@ -21,8 +21,11 @@ module.exports = {
         allowNull: false
       },
       isEmailVerified:{
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
+      token: {
+        type: Sequelize.STRING
       },
       phoneNo: {
         type: Sequelize.BIGINT

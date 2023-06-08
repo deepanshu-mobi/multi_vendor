@@ -27,12 +27,15 @@ module.exports = {
         type: Sequelize.BIGINT
       },
       isEmailVerified:{
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       role: {
         type: Sequelize.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),
         defaultValue: constants.userType.vendor
+      },
+      token: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

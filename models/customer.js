@@ -25,8 +25,11 @@ const sequelize  = require('../config/db')
       allowNull: false
     },
     isEmailVerified:{
-      type: DataTypes.BOOLEAN,
-      defaultValue: false
+      type: DataTypes.INTEGER,
+      defaultValue: 0
+    },
+    token: {
+      type: DataTypes.STRING
     },
     phoneNo: {
       type: DataTypes.BIGINT
