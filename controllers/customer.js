@@ -49,7 +49,7 @@ exports.login = async (req, res) => {
                 customerId: user.customerId,
                 name: user.name
             }
-            return res.status(StatusCodes.OK).send(response, { mesg: 'Successfully loggedIn' })
+            return res.status(StatusCodes.OK).send({customer: response, mesg: 'Successfully loggedIn' })
         }
         return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Email or Password may be wrong please try again' })
     }

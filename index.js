@@ -17,8 +17,6 @@ sequelize.sync()
     console.log('Error while sycing', err.message);
   });
 
-
-
 const apiRoutes = require('./routes/apiRoutes')
 app.use(apiRoutes)
 // verifying email url: "http://localhost:7777/v1/customer/verify/email?token=<%= token %>
