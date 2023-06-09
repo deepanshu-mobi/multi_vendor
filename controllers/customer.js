@@ -6,11 +6,6 @@ const serverConfig = require('../config/server.config')
 
 exports.register = async(req, res) => {
     
-    const { email } = req.body
-    const user = await Customer.findOne({ where: { email } }) ;
-    if(user){
-     return res.status(StatusCodes.BAD_REQUEST).send({message: 'Email already exist'});
-    }
     const customer = await customerService.createCustomer(req.body);
     const response = {
         customerId: customer.customerId,
