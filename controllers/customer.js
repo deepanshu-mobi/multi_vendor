@@ -26,8 +26,8 @@ exports.verifyEmail = async (req, res) => {
             message: err.message,
           });
         } 
-        const email = decoded.id
-        const customer = await Customer.findOne({ where: { email } });
+        const customerId = decoded.id
+        const customer = await Customer.findOne({ where: { customerId } });
         customer.isEmailVerified = 1;
         await customer.save();
         res.render('templates/emailVerify', { message });
