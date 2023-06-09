@@ -8,11 +8,15 @@
 </head>
 <body>
     <div class="container">
-        <% if (message === 'unauthorized') { %>
+        <% if (message === 'invalid token') { %>
             <div class="alert alert-danger" role="alert">
-                Unauthorized
+                Invalid token
             </div>
-        <% } else { %>
+        <% } else if(message === 'jwt expired') { %>
+            <div class="alert alert-danger" role="alert">
+                token has expired
+            </div>
+        <% }else { %>
             <div class="jumbotron text-center">
                 <h1 class="display-4">Your Email is Verified</h1>
             </div>
