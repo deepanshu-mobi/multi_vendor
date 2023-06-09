@@ -33,7 +33,7 @@ exports.verifyEmail = async(req, res)=> {
             }
             user.isEmailVerified = 1
             await user.save()
+            res.render('templates/emailVerify')
         })
     }
-    res.render('templates/emailVerify')
 }

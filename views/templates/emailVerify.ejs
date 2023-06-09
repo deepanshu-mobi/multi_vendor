@@ -8,9 +8,15 @@
 </head>
 <body>
     <div class="container">
-        <div class="jumbotron text-center">
-            <h1 class="display-4">Your Email is Verified</h1>
-        </div>
+        <% if (message === 'unauthorized') { %>
+            <div class="alert alert-danger" role="alert">
+                Unauthorized
+            </div>
+        <% } else { %>
+            <div class="jumbotron text-center">
+                <h1 class="display-4">Your Email is Verified</h1>
+            </div>
+        <% } %>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
