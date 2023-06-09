@@ -18,6 +18,9 @@ exports.register = async (req, res) => {
 exports.verifyEmail = async (req, res) => {
 
     const { token } = req.query;
+    if(token){
+        return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Token is not provided' })
+    }
     let message = '';
       jwt.verify(token, serverConfig.SECRET, async (err, decoded) => {
         if (err) {
