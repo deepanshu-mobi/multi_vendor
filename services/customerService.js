@@ -22,6 +22,13 @@ const createCustomer = async(body)=>{
     return updateCustomer
 }
 
+const loginCustomer = async (body)=> {
+
+    const { email } = body;
+    const user = await Customer.findOne({ where: { email } });
+    return user
+}
 module.exports = {
     createCustomer,
+    loginCustomer,
 }
