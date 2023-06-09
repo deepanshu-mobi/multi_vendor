@@ -9,13 +9,13 @@ app.set('view engine', 'ejs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-// sequelize.sync()
-//   .then(() => {
-//     console.log('sync successfully');
-//   })
-//   .catch((err) => {
-//     console.log('Error while sycing', err.message);
-//   });
+sequelize.sync()
+  .then(() => {
+    console.log('sync successfully');
+  })
+  .catch((err) => {
+    console.log('Error while sycing', err.message);
+  });
 
 
 
