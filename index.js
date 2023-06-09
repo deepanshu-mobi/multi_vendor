@@ -6,7 +6,6 @@ const serverConfig = require('./config/server.config');
 const sequelize = require('./config/db');
 
 app.set('view engine', 'ejs')
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
@@ -21,9 +20,6 @@ sequelize.sync()
 
 
 const apiRoutes = require('./routes/apiRoutes')
-app.get('/', (req, res) => {
-  res.render('customer')
-})
 app.use(apiRoutes)
 
 app.listen(serverConfig.PORT, ()=>{
