@@ -2,7 +2,7 @@ const { Customer } = require('../models');
 const bcrypt = require('bcryptjs')
 const serverConfig = require('../config/server.config')
 const jwt = require('jsonwebtoken')
-const { nodeMailer } = require('../utils/sendEmail')
+const { sendEmail } = require('../utils/sendEmail')
 
 
 const createCustomer = async(body)=>{
@@ -18,7 +18,7 @@ const createCustomer = async(body)=>{
     })
     const token = jwt.sign({ id: customer.customerId }, serverConfig.SECRET, {expiresIn: 120})// 2 min
     const updateCustomer = await customer.update({token})
-    nodeMailer(email, token)
+    sendEmail(email, token)
     return updateCustomer
 }
 

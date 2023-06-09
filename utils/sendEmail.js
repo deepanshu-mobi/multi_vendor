@@ -4,7 +4,7 @@ const path = require('path');
 const ejs = require('ejs')
 const templatePath = path.join(__dirname, '../views/templates/email.ejs');
 
-const nodeMailer = async (email,token) => {
+const sendEmail = async (email,token) => {
  const htmlToSend = await ejs.renderFile(templatePath,{token});
 
   const transport = nodemailer.createTransport({
@@ -31,5 +31,5 @@ const nodeMailer = async (email,token) => {
 };
 
 module.exports = {
-  nodeMailer,
+  sendEmail,
 };
