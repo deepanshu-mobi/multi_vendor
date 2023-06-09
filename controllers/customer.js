@@ -45,23 +45,23 @@ exports.login = async (req, res) => {
     const isValidPassword = bcrypt.compare(password, customer.password);
     if (isValidPassword) {
       if (customer.isEmailVerified === 0) {
-        return res
-          .status(StatusCodes.BAD_REQUEST)
-          .send({ mesg: 'Email is not verified yet try after sometime later' });
+        return res.status(StatusCodes.BAD_REQUEST).send({ 
+            mesg: 'Email is not verified yet try after sometime later' 
+        });
       }
       const response = {
         customerId: customer.customerId,
         name: customer.name,
       };
-      return res
-        .status(StatusCodes.OK)
-        .send({ customer: response, mesg: 'Successfully loggedIn' });
+      return res.status(StatusCodes.OK).send({ 
+        customer: response, mesg: 'Successfully loggedIn' 
+    });
     }
-    return res
-      .status(StatusCodes.BAD_REQUEST)
-      .send({ mesg: 'Email or Password may be wrong please try again' });
+    return res.status(StatusCodes.BAD_REQUEST).send({ 
+        mesg: 'Email or Password may be wrong please try again' 
+    });
   }
-  return res
-    .status(StatusCodes.BAD_REQUEST)
-    .send({ mesg: 'User does not exist' });
+  return res.status(StatusCodes.BAD_REQUEST).send({ 
+    mesg: 'User does not exist' 
+});
 };
