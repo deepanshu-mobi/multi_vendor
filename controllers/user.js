@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
 exports.findAll = async (req, res) => {
   
   try{
-  const customers = await customerService.findAllCustomers({ attributes: {exclude: ['password']} });
+  const customers = await userService.findAllCustomers({ attributes: {exclude: ['password']} });
   return res.status(StatusCodes.OK).send(customers)
   }catch(err){
     console.log('Error while findAll customers',err)
