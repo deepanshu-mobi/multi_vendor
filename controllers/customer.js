@@ -39,6 +39,7 @@ exports.verifyEmail = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  try{
   const { password } = req.body;
   const customer = await customerService.loginCustomer(req.body);
   if (customer) {
@@ -53,6 +54,9 @@ exports.login = async (req, res) => {
         customerId: customer.customerId,
         name: customer.name,
       };
+      req.session.user = {
+        email: customer.email
+      }
       return res.status(StatusCodes.OK).send({ 
         customer: response, mesg: 'Successfully loggedIn' 
     });
@@ -64,12 +68,19 @@ exports.login = async (req, res) => {
   return res.status(StatusCodes.BAD_REQUEST).send({ 
     mesg: 'User does not exist' 
 });
+  }catch(err){
+    console.log('Error while loggin',err)
+  }
 };
 
 
 exports.findAll = async (req, res) => {
-
+  
+  try{
   const customers = await customerService.findAllCustomers({ attributes: {exclude: ['password']} });
   return res.status(StatusCodes.OK).send(customers)
-  
+  }catch(err){
+    console.log('Error while findAll user',err)
+  }
+
 }

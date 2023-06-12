@@ -1,6 +1,6 @@
 const userService = require('../services/userService');
 const { StatusCodes } = require('http-status-codes');
-
+const bcrypt = require('bcryptjs')
 
 
 exports.login = async (req, res) => {
@@ -19,8 +19,11 @@ exports.login = async (req, res) => {
             userId: user.userId,
             name: user.name,
           };
+          req.session.user = {
+            email: user.email
+          }
           return res.status(StatusCodes.OK).send({ 
-            customer: response, mesg: 'Successfully loggedIn' 
+            user: response, mesg: 'Successfully loggedIn' 
         });
         }
         return res.status(StatusCodes.BAD_REQUEST).send({ 

@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator")
 const { StatusCodes } = require('http-status-codes')
+const { User } = require('../models')
 
 const expressValidator = (req, res, next) =>{
     
@@ -31,9 +32,18 @@ function isValidPassword(value)
     return value
 }
 
+const isAdmin = async (req, res, next) => {
+    const { email } = req.user
+    const user = await User.findOne({ where: { email }});
+    if(!user){
+        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only admin allow to access this endPoint' })
+    }
+    next()
+}
 
 module.exports = {
     expressValidator,
     isValidPassword,
     isValidEmail,
+    isAdmin,
 }

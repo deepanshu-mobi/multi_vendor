@@ -1,9 +1,24 @@
 const express = require('express');
 const app = express();
 
+const sequelize = require('./config/db');
+
+const session = require('express-session')
+const sequelizeStore = require('connect-session-sequelize')(session.Store);
+
+app.use(session({
+  secret: 'My_Secret',
+  store: new sequelizeStore({
+    expiration: 24 * 60 * 60 * 1000,
+    db: sequelize,
+  }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000}
+}))
 
 const serverConfig = require('./config/server.config');
-const sequelize = require('./config/db');
+
 
 app.set('view engine', 'ejs')
 app.use(express.json());
