@@ -65,3 +65,11 @@ exports.login = async (req, res) => {
     mesg: 'User does not exist' 
 });
 };
+
+
+exports.findAll = async (req, res) => {
+
+  const customers = await customerService.findAllCustomers({ attributes: {exclude: ['password']} });
+  return res.status(StatusCodes.OK).send(customers)
+  
+}
