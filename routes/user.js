@@ -6,5 +6,5 @@ const { verifySession } = require('../middleware/verifySession')
 
 router.post('/user/login', loginValidator, expressValidator, userController.login)
 router.use(verifySession)
-router.get('/customer/customers', isAdmin, userController.findAll)
+router.get('/user/customers', isAdmin, userController.findAll)
 module.exports = router
