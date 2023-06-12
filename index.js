@@ -25,12 +25,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 sequelize.sync()
-  .then(() => {
+.then(() => {
     console.log('sync successfully');
-  })
+})
   .catch((err) => {
     console.log('Error while sycing', err.message);
-  });
+});
 
 const apiRoutes = require('./routes/apiRoutes')
 app.use(apiRoutes)

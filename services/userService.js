@@ -1,4 +1,4 @@
-const { User } = require('../models')
+const { User, Customer } = require('../models')
 
 const adminLogin = async (body) => {
 
@@ -7,6 +7,13 @@ const adminLogin = async (body) => {
     return user
 }
 
+const findAllCustomers = async (value) =>{
+
+    const customers = await Customer.findAll(value);
+    return customers;
+}
+
 module.exports = {
     adminLogin,
+    findAllCustomers,
 }

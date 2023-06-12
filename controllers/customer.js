@@ -6,6 +6,7 @@ const serverConfig = require('../config/server.config');
 const bcrypt = require('bcryptjs');
 
 exports.register = async (req, res) => {
+  try{
   const customer = await customerService.createCustomer(req.body);
   const response = {
     customerId: customer.customerId,
@@ -13,10 +14,18 @@ exports.register = async (req, res) => {
     token: customer.token,
   };
   return res.status(StatusCodes.OK).send(response);
+}catch(err){
+  console.log('Error while registering customer',err)
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+    mesg: 'Internal server error'
+  })
+}
+
 };
 
 exports.verifyEmail = async (req, res) => {
 
+  try{
     const { token } = req.query;
     if(token){
         return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Token is not provided' })
@@ -35,6 +44,12 @@ exports.verifyEmail = async (req, res) => {
         await customer.save();
         res.render('templates/emailVerify', { message });
       });
+    }catch(err){
+      console.log('Error while verifying Email',err);
+      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+        mesg: 'Internal server error'
+      })
+    }
 
 };
 
@@ -70,17 +85,10 @@ exports.login = async (req, res) => {
 });
   }catch(err){
     console.log('Error while loggin',err)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      mesg: 'Internal server error'
+    })
   }
 };
 
 
-exports.findAll = async (req, res) => {
-  
-  try{
-  const customers = await customerService.findAllCustomers({ attributes: {exclude: ['password']} });
-  return res.status(StatusCodes.OK).send(customers)
-  }catch(err){
-    console.log('Error while findAll user',err)
-  }
-
-}

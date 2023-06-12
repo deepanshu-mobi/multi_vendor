@@ -29,14 +29,8 @@ const loginCustomer = async (body)=> {
     return user
 }
 
-const findAllCustomers = async (value) =>{
-
-    const customers = await Customer.findAll(value);
-    return customers;
-}
 
 module.exports = {
     createCustomer,
     loginCustomer,
-    findAllCustomers,
 }
