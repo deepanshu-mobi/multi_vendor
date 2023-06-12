@@ -1,6 +1,7 @@
 const { validationResult } = require("express-validator")
 const { StatusCodes } = require('http-status-codes')
 const { User } = require('../models')
+const constant = require('../utils/constant')
 
 const expressValidator = (req, res, next) =>{
     
@@ -35,8 +36,14 @@ function isValidPassword(value)
 const isAdmin = async (req, res, next) => {
     const { email } = req.user
     const user = await User.findOne({ where: { email }});
+
     if(!user){
         return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only admin allow to access this endPoint' })
+    }else if(user.isEmailVerified === 0){
+        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only verified admin allow to access this endPoint' })
+    }
+    else if(user.role == constant.userType.vendor){
+        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only admin allow to access this endPoint not vendors' }) 
     }
     next()
 }
