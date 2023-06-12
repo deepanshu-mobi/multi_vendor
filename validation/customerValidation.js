@@ -20,6 +20,9 @@ const validateRegistration = [
     .notEmpty()
     .withMessage('Password is required')
     .custom(isValidPassword),
+    body('phoneNo')
+    .isLength({ min:10, max: 10})
+    .withMessage('Phone number should be of 10 digits')
 ]
 
 const validateLogin = [
