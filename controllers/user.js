@@ -1,4 +1,4 @@
-const userService = require('../services/adminService');
+const userService = require('../services/userService');
 const { StatusCodes } = require('http-status-codes');
 
 
