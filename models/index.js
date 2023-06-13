@@ -11,8 +11,8 @@ const ProductVendorMapping = require('./product_vendor_mapping')
 // Customer.hasMany(Cart, { foreignKey: 'customerId' });
 // Product.hasMany(Cart, { foreignKey: 'productId' });
 
-// User.belongsTo(Product,{through: ProductVendorMapping,foreignKey: 'userId'});
-// Product.belongsTo(User,{through: ProductVendorMapping,foreignKey: 'productId'});
+User.belongsTo(Product,{through: ProductVendorMapping,foreignKey: 'userId'});
+Product.belongsTo(User,{through: ProductVendorMapping,foreignKey: 'productId'});
 
 
 
