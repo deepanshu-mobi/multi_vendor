@@ -3,6 +3,26 @@ const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcryptjs')
 
 
+
+exports.register = async (req, res) => {
+
+  try{
+    console.log(req.body)
+    const user = await userService.userRegister(req.body);
+    const response = {
+      userId: user.userId,
+      email: user.email,
+      role: user.role
+    }
+    return res.status(StatusCodes.CREATED).send(response)
+  }catch(err){
+    console.log('Error while registering user',err);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      mesg: 'Internal server error'
+    })
+  }
+}
+
 exports.login = async (req, res) => {
 
   try{
