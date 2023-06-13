@@ -1,6 +1,6 @@
 const { User, Customer } = require('../models')
 
-const adminLogin = async (body) => {
+const userLogin = async (body) => {
 
     const { email } = body
     const user = await User.findOne({ where: { email }})
@@ -14,6 +14,6 @@ const findAllCustomers = async (value) =>{
 }
 
 module.exports = {
-    adminLogin,
+    userLogin,
     findAllCustomers,
 }

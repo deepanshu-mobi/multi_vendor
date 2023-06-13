@@ -7,7 +7,7 @@ exports.login = async (req, res) => {
 
   try{
     const { password } = req.body;
-    const user = await userService.adminLogin(req.body);
+    const user = await userService.userLogin(req.body);
     if (user) {
         const isValidPassword = bcrypt.compare(password, user.password);
         if (isValidPassword) {
