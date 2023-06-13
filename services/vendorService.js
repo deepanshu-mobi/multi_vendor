@@ -13,3 +13,7 @@ const registerVendor = async (body) => {
     })
     return vendor;
 }
+
+module.exports = {
+    registerVendor,
+}
