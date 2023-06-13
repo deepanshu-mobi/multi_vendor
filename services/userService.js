@@ -1,4 +1,20 @@
 const { User, Customer } = require('../models')
+const bcrypt = require('bcryptjs')
+
+const userRegister = async (body) => {
+
+    const { name, email, password, role, phoneNo } = body;
+    const hashPassword = bcrypt.hashSync(password, 8)
+    const user = await User.create({
+        name,
+        email,
+        role,
+        phoneNo,
+        password: hashPassword
+    })
+    return user
+}
+
 
 const userLogin = async (body) => {
 
@@ -14,6 +30,7 @@ const findAllCustomers = async (value) =>{
 }
 
 module.exports = {
+    userRegister,
     userLogin,
     findAllCustomers,
 }
