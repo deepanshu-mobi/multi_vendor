@@ -1,5 +1,4 @@
 const userService = require('../services/userService');
-const customerService = require('../services/customerService');
 const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcryptjs')
 
@@ -47,13 +46,14 @@ exports.login = async (req, res) => {
 exports.findAll = async (req, res) => {
   
   try{
-  const customers = await userService.findAllCustomers({ attributes: {exclude: ['password']} });
-  return res.status(StatusCodes.OK).send(customers)
+
+  const customers = await userService.findAllCustomers({ attributes: { exclude: ['password', 'token'] } });
+  return res.json(customers)
+
   }catch(err){
     console.log('Error while findAll customers',err)
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       mesg: 'Internal server error'
     })
   }
-
 }
