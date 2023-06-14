@@ -27,7 +27,7 @@ exports.verifyEmail = async (req, res) => {
 
   try{
     const { token } = req.query;
-    if(token){
+    if(!token){
         return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Token is not provided' })
     }
     let message = '';
