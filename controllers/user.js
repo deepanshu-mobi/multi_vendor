@@ -7,7 +7,6 @@ const bcrypt = require('bcryptjs')
 exports.register = async (req, res) => {
 
   try{
-    console.log(req.body)
     const user = await userService.userRegister(req.body);
     const response = {
       userId: user.userId,
