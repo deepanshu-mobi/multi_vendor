@@ -1,5 +1,7 @@
 const { body } = require('express-validator')
 const constant = require('../utils/constant')
+const { User } = require('../models')
+
 
 const userRegisterValidator = [
     body('name')
@@ -7,7 +9,13 @@ const userRegisterValidator = [
     .withMessage('Name is required'),
     body('email')
     .notEmpty()
-    .withMessage('Email is required'),
+    .withMessage('Email is required')
+    .custom(async email => {
+        const existingUser = await User.findOne({ where: { email } });
+        if(existingUser){
+            throw new Error('User exist already with this email')
+        }
+    }),
     body('password')
     .notEmpty()
     .withMessage('Password is required'),
@@ -18,9 +26,10 @@ const userRegisterValidator = [
         if(role == constant.userType.super_admin){
             throw new Error('Only admin || vendor registration is allowed')
         }
-        if(role != constant.userType.admin || role != constant.userType.vendor){
-            throw new Error('Not a valid role possible roles are admin || vendor')
+        else if(role != constant.userType.admin && role != constant.userType.vendor){
+            throw new Error('Not a valid role possible roles are ADMIN || VENDOR')
         }
+        return true
     })
 ]
 
