@@ -23,9 +23,6 @@ const sequelize  = require('../config/db')
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    image: {
-      type: DataTypes.STRING
-    },
   }, {
     sequelize,
     tableName: 'products'
