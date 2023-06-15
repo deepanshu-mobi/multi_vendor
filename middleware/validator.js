@@ -2,11 +2,15 @@ const { validationResult } = require("express-validator")
 const { StatusCodes } = require('http-status-codes')
 const { User } = require('../models')
 const constant = require('../utils/constant')
+const deleteImage = require('../utils/deleteImage')
 
 const expressValidator = (req, res, next) =>{
     
     const errors = validationResult(req);
     if(!errors.isEmpty()){
+        if(req.file){
+            deleteImage(req.file.path)
+        }
         return res.status(StatusCodes.BAD_REQUEST).send({
             error: errors.array()[0].msg
         })

@@ -10,7 +10,12 @@ const validateNewProduct = [
     .withMessage('Description is required'),
     body('price')
     .notEmpty()
-    .withMessage('Price is required'),
+    .withMessage('Price is required')
+    .custom(price => {
+        if(price == 0){
+            throw new Error('Price can not be 0')
+        }
+    }),
     body('image')
     .custom(isValidImage)
 ]
