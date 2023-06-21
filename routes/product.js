@@ -7,6 +7,6 @@ const { expressValidator } = require('../middleware/validator')
 const { isVendor } = require('../middleware/verifyUser')
 
 router.use(verifySession)
-router.post('/user/product', multer.single('image'), validateNewProduct, expressValidator, isVendor, productController.addProduct)
+router.post('/user/product', isVendor, multer.single('image'), validateNewProduct, expressValidator, productController.addProduct)
 
 module.exports = router
