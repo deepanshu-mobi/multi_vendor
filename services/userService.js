@@ -1,5 +1,6 @@
-const { User, Customer } = require('../models')
+const { User, Customer, ProductVendorMapping, Product } = require('../models')
 const bcrypt = require('bcryptjs')
+const constant = require('../utils/constant')
 
 const userRegister = async (body) => {
 
@@ -29,8 +30,27 @@ const findAllCustomers = async (value) =>{
     return customers;
 }
 
+const findAllVendors = async (value) => {
+    const users = await User.findAll(value);
+    const vendors = [];
+    users.forEach((user) => {
+        if(user.role == constant.userType.vendor){
+            vendors.push(user)
+        }
+    })
+    return vendors;
+}
+
+const findVendorProducts = async (vendorId) => {
+
+    const users = await ProductVendorMapping.findAll({ where: { vendorId } ,attributes: ['vendorId'], include: { model: Product } });
+    return users;
+}
+
 module.exports = {
     userRegister,
     userLogin,
     findAllCustomers,
+    findAllVendors,
+    findVendorProducts,
 }
