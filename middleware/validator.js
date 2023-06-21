@@ -7,6 +7,7 @@ const deleteImage = require('../utils/deleteImage')
 const expressValidator = (req, res, next) =>{
     
     const errors = validationResult(req);
+    console.log(errors)
     if(!errors.isEmpty()){
         if(req.file){
             deleteImage(req.file.path)
