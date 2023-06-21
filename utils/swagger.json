@@ -8,7 +8,11 @@
   "tags": [
     {
       "name": "User",
-      "description": "Operation related to user"
+      "description": "Operation related to user( ADMIN || VENDOR)"
+    },
+    {
+      "name": "User - Customer",
+      "description": "Operation related to Customer"
     },
     {
       "name": "Product",
@@ -122,7 +126,7 @@
     },
     "/v1/user/login": {
       "post": {
-        "summary": "Resgister User or vendor",
+        "summary": "login ADMIN || VENDOR || SUPER_ADMIN",
         "tags": ["User"],
         "requestBody": {
           "required": true,
@@ -161,7 +165,7 @@
     "/v1/customer/register": {
       "post": {
         "summary": "Customer registration",
-        "tags": ["User"],
+        "tags": ["User - Customer"],
         "requestBody": {
           "required": true,
           "content": {
@@ -212,7 +216,7 @@
     "/v1/customer/login": {
       "post": {
         "summary": "Customer login",
-        "tags": ["User"],
+        "tags": ["User - Customer"],
         "requestBody": {
           "required": true,
           "content": {
