@@ -1,0 +1,371 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Multi Vendor",
+    "description": "Description of your API"
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operation related to user"
+    },
+    {
+      "name": "Product",
+      "description": "Operation related to product"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:7777",
+      "description": "HTTP server"
+    }
+  ],
+  "paths": {
+    "/v1/user/customers": {
+      "get": {
+        "summary": "Get all customers and only admins can access this endPoint",
+        "tags": ["User"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "customerid": {
+                    "type": "integer"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "isEmailVerified": {
+                    "type": "integer"
+                  },
+                  "phoneNo": {
+                    "type": "integer"
+                  },
+                  "createdAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "updatedAt": {
+                    "type": "string",
+                    "format": "date-time"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/register": {
+      "post": {
+        "summary": "Admin and vendor registration",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "admin"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "admin@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Admin@12",
+                    "format": "password"
+                  },
+                  "phoneNo": {
+                    "type": "integer",
+                    "example": "8574635278"
+                  },
+                  "role": {
+                    "type": "string",
+                    "example": "VENDOR"
+                  }
+                },
+                "required":[
+                  "name",
+                  "email",
+                  "password",
+                  "role"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/user/login": {
+      "post": {
+        "summary": "Resgister User or vendor",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "super_admin@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "super_admin"
+                  }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User logged in successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/register": {
+      "post": {
+        "summary": "Customer registration",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "integer",
+                    "example": "customer"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "customer2@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "customer",
+                    "format": "password"
+                  },
+                  "phoneNo": {
+                    "type": "integer",
+                    "example": "8574635278"
+                  }
+                },
+                "required":[
+                  "name",
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses":{
+          "200": {
+            "description": "Registered successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/login": {
+      "post": {
+        "summary": "Customer login",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "example@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "Example@12"
+                  }
+                },
+                "required":[
+                  "email",
+                  "password"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Customer Logged in successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/verify/email": {
+      "get": {
+        "summary": "Verify registered user email ",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "/v1/user/vendors": {
+      "get": {
+        "summary": "Only admin can get all the vendors",
+        "tags": ["User"],
+        "responses":{
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/user/vendor/products": {
+      "get": {
+        "summary": "fetch all products of vendor only admin allow to access this end point",
+        "tags": ["User"],
+        "parameters": [
+          {
+          "name": "id",
+          "in": "query",
+          "description": "VendorId",
+          "required": true,
+          "type": "integer"
+        }
+      ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/user/product": {
+      "post": {
+        "summary": "Adding new product",
+        "tags": ["Product"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productName": {
+                    "type": "string",
+                    "example": "cup"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "This is an description of above product"
+                  },
+                  "price": {
+                    "type": "integer",
+                    "example": "800"
+                  },
+                  "image": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                },
+                "required": [
+                  "productName",
+                  "description",
+                  "price",
+                  "image"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Product Added successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}
