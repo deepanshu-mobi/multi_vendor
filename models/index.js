@@ -12,8 +12,10 @@ const ProductImage = require('./product_images')
 // Customer.hasMany(Cart, { foreignKey: 'customerId' });
 // Product.hasMany(Cart, { foreignKey: 'productId' });
 
-User.belongsTo(Product, { through: ProductVendorMapping, foreignKey: 'userId' });
-Product.belongsTo(User, { through: ProductVendorMapping, foreignKey: 'productId' });
+User.hasMany(ProductVendorMapping, { foreignKey: 'vendorId'});
+ProductVendorMapping.belongsTo(User, { foreignKey: 'vendorId'})
+Product.hasMany(ProductVendorMapping, { foreignKey: 'productId' });
+ProductVendorMapping.belongsTo(Product, { foreignKey: 'productId'})
 Product.hasMany(ProductImage, { foreignKey: 'productId' })
 
 
