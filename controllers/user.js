@@ -15,7 +15,7 @@ exports.register = async (req, res) => {
     }
     return res.status(StatusCodes.CREATED).send(response)
   }catch(err){
-    console.log('Error while registering user',err);
+    console.log('Error while registering user', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       mesg: 'Internal server error'
     })
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
         mesg: 'User does not exist' 
     });
   }catch(err){
-    console.log('Error while login user',err);
+    console.log('Error while login user', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       mesg: 'Internal server error'
     })
@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
 }
 
 
-exports.findAll = async (req, res) => {
+exports.findCustomers = async (req, res) => {
   
   try{
 
@@ -71,6 +71,35 @@ exports.findAll = async (req, res) => {
 
   }catch(err){
     console.log('Error while findAll customers',err)
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      mesg: 'Internal server error'
+    })
+  }
+}
+
+
+exports.findVendors = async (req, res) => {
+
+  try{
+  const vendors = await userService.findAllVendors({attributes: { exclude: ['password', 'token'] }})
+  return res.status(StatusCodes.OK).send(vendors)
+  }catch(err){
+    console.log('Error while finding all vendors', err);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
+      mesg: 'Internal server error'
+    })
+  }
+}
+
+
+exports.findAllProductsOfVendor = async (req, res) => {
+
+  try{
+  const { id } = req.query;
+  const vendors = await userService.findVendorProducts(id)
+  return res.status(StatusCodes.OK).send(vendors)
+  }catch(err){
+    console.log('Error while finding vendor products', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
       mesg: 'Internal server error'
     })
