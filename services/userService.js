@@ -1,4 +1,4 @@
-const { User, Customer, ProductVendorMapping, Product } = require('../models')
+const { User, Customer, ProductVendorMapping, Product, UserAccessToken } = require('../models')
 const bcrypt = require('bcryptjs')
 const constant = require('../utils/constant')
 
@@ -47,10 +47,27 @@ const findVendorProducts = async (vendorId) => {
     return users;
 }
 
+
+const userAccessTokenTable = async (body) => {
+
+    const { userId, token, deviceType } = body;
+    const mixId = userId + (Math.floor(Math.random()*1000)+1);
+    
+    const tokenBody = await UserAccessToken.create({
+        userId,
+        token,
+        deviceType,
+        deviceId: mixId
+    })
+    return tokenBody;
+}
+
+
 module.exports = {
     userRegister,
     userLogin,
     findAllCustomers,
     findAllVendors,
     findVendorProducts,
+    userAccessTokenTable,
 }
