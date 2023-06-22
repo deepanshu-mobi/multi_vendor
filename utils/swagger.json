@@ -11,7 +11,7 @@
       "description": "Operation related to user( ADMIN || VENDOR)"
     },
     {
-      "name": "User - Customer",
+      "name": "Customer",
       "description": "Operation related to Customer"
     },
     {
@@ -165,7 +165,7 @@
     "/v1/customer/register": {
       "post": {
         "summary": "Customer registration",
-        "tags": ["User - Customer"],
+        "tags": ["Customer"],
         "requestBody": {
           "required": true,
           "content": {
@@ -216,7 +216,7 @@
     "/v1/customer/login": {
       "post": {
         "summary": "Customer login",
-        "tags": ["User - Customer"],
+        "tags": ["Customer"],
         "requestBody": {
           "required": true,
           "content": {
