@@ -20,9 +20,9 @@ User.hasMany(ProductVendorMapping, { foreignKey: 'vendorId'});
 ProductVendorMapping.belongsTo(User, { foreignKey: 'vendorId'})
 Product.hasMany(ProductVendorMapping, { foreignKey: 'productId' });
 ProductVendorMapping.belongsTo(Product, { foreignKey: 'productId'})
-Product.hasMany(ProductImage, { foreignKey: 'productId' })
-
-
+Product.hasMany(ProductImage, { foreignKey: 'productId' });
+User.hasMany(UserAccessToken, { foreignKey: 'userId' });
+Customer.hasMany(CustomerAccessToken, { foreignKey: 'customerId' });
 
 
 module.exports = {
