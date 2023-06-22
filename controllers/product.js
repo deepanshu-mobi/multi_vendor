@@ -1,6 +1,6 @@
 const productService = require('../services/productService');
 const { StatusCodes } = require('http-status-codes');
-
+const { response } = require('../utils/commonRes')
 
 exports.addProduct = async (req, res) => {
 
@@ -14,15 +14,13 @@ exports.addProduct = async (req, res) => {
         image: req.file.filename
     }
     const product = await productService.addingNewProduct(body, email);
-    const response = {
+    const resp = {
         productId: product.productId,
         productName: product.productName
     }
-    return res.status(StatusCodes.CREATED).send(response)
+    return res.status(StatusCodes.CREATED).send(response.successful('Product created successfully', resp))
 }catch(err){
     console.log('Error while creating new product',err);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send({
-        mesg: 'Internal server error'
-    })
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
 }
 }
