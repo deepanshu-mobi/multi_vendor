@@ -50,9 +50,16 @@ const findVendorProducts = async (vendorId) => {
 
 const userAccessTokenTable = async (body) => {
 
-    const { userId, token, deviceType } = body;
+    let { userId, token, deviceType } = body;
     const mixId = userId + (Math.floor(Math.random()*1000)+1);
     
+    if (deviceType.includes("Mobile")) {
+        deviceType = "Mobile";
+      } else if (deviceType.includes("Tablet")) {
+        deviceType = "Tablet";
+      } else {
+        deviceType = "Desktop";
+      }
     const tokenBody = await UserAccessToken.create({
         userId,
         token,
