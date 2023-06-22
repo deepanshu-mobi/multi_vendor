@@ -39,7 +39,7 @@ function isValidPassword(value)
 }
 
 const isAdmin = async (req, res, next) => {
-    const { email } = req.email
+    const email = req.email
     const user = await User.findOne({ where: { email } });
 
     if(!user){
@@ -54,11 +54,11 @@ const isAdmin = async (req, res, next) => {
 }
 
 const isSuperAdmin = async (req, res, next) => {
-    const { email } = req.email
+    const email  = req.email
     const user = await User.findOne({ where: { email } });
 
     if(!user){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint'))
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint'))
     }
     else if(user.role !== constant.userType.super_admin){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint')) 
