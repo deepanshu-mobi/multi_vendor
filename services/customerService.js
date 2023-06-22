@@ -1,4 +1,4 @@
-const { Customer } = require('../models');
+const { Customer, CustomerAccessToken } = require('../models');
 const bcrypt = require('bcryptjs')
 const serverConfig = require('../config/server.config')
 const jwt = require('jsonwebtoken')
@@ -29,8 +29,23 @@ const loginCustomer = async (body)=> {
     return user
 }
 
+const customerAccessTokenTable = async (body) => {
+
+    const { customerId, token, deviceType } = body;
+    const mixId = customerId + (Math.floor(Math.random()*1000)+1);
+
+    const tokenBody = await CustomerAccessToken.create({
+        customerId,
+        token,
+        deviceType,
+        deviceId: mixId
+    })
+    return tokenBody;
+}
+
 
 module.exports = {
     createCustomer,
     loginCustomer,
+    customerAccessTokenTable,
 }
