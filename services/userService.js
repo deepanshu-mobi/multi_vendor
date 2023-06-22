@@ -70,6 +70,19 @@ const userAccessTokenTable = async (body) => {
 }
 
 
+const vendorAddingProduct = async (body, email) => {
+
+    const { productId } = body;
+
+    const user = await User.findOne({ where: { email } });
+    const vendorProduct = await ProductVendorMapping.create({
+        productId,    
+        vendorId: user.userId
+    })
+    return vendorProduct;
+}
+
+
 module.exports = {
     userRegister,
     userLogin,
@@ -77,4 +90,5 @@ module.exports = {
     findAllVendors,
     findVendorProducts,
     userAccessTokenTable,
+    vendorAddingProduct,
 }
