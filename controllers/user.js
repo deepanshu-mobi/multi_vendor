@@ -39,9 +39,6 @@ exports.login = async (req, res) => {
             userId: user.userId,
             name: user.name,
           };
-          req.session.user = {
-            email: user.email
-          }
           return res.status(StatusCodes.OK).send({ 
             user: response, mesg: 'Successfully loggedIn' 
         });
