@@ -55,21 +55,36 @@ exports.login = async (req, res) => {
   const { password } = req.body;
   const customer = await customerService.loginCustomer(req.body);
   if (customer) {
+
     const isValidPassword = await bcrypt.compare(password, customer.password);
+
     if (isValidPassword) {
       if (customer.isEmailVerified === 0) {
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email is not verified yet try after sometime later'));
       }
+
       const token = jwt.sign({email: customer.email}, serverConfig.SECRET, { expiresIn: 180 })//3min
+
+      const body = {
+        customerId: customer.customerId,
+        token: token,
+        deviceType: req.headers['user-agent']
+      }
+
+      await customerService.customerAccessTokenTable(body)
+
       const resp = {
         customerId: customer.customerId,
         name: customer.name,
         accessToken: token
       };
+
       return res.status(StatusCodes.OK).send(response.successful('Successfully loggedIn', resp));
     }
+
     return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email or Password may be wrong please try again'));
   }
+
   return res.status(StatusCodes.BAD_REQUEST).send(response.failed('User does not exist'));
   }catch(err){
     console.log('Error while loggin',err)

@@ -27,12 +27,22 @@ exports.login = async (req, res) => {
     const { password } = req.body;
     const user = await userService.userLogin(req.body);
     if (user) {
+
         const isValidPassword = await bcrypt.compare(password, user.password);
         if (isValidPassword) {
+
           if (user.isEmailVerified === 0) {
             return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email is not verified yet try after sometime later'));
           }
           const token = jwt.sign({email: user.email}, serverConfig.SECRET, { expiresIn: 180 })//3min
+
+          const body = {
+            userId: user.userId,
+            token: token,
+            deviceType: req.headers['user-agent']
+          }
+          await userService.userAccessTokenTable(body);
+
           const resp= {
             userId: user.userId,
             name: user.name,
