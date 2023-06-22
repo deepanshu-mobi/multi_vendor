@@ -9,5 +9,6 @@ router.post('/user/login', loginValidator, expressValidator, userController.logi
 router.use(verifyToken)
 router.get('/user/customers', isAdmin, userController.findCustomers)
 router.get('/user/vendors', isAdmin, userController.findVendors)
-router.get('/user/vendor/products', isAdmin, userController.findAllProductsOfVendor)
+router.get('/user/vendor/products', isAdmin, userController.findAllProductsOfVendor);
+router.post('/user/vendor/product', userController.addProductByVendor)
 module.exports = router
