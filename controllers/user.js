@@ -2,7 +2,8 @@ const userService = require('../services/userService');
 const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcryptjs')
 const { response } = require('../utils/commonRes')
-
+const jwt = require('jsonwebtoken');
+const serverConfig = require('../config/server.config')
 
 
 exports.register = async (req, res) => {
@@ -96,4 +97,20 @@ exports.findAllProductsOfVendor = async (req, res) => {
     console.log('Error while finding vendor products', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
   }
+}
+
+
+exports.addProductByVendor = async (req, res) => {
+
+  try{ 
+
+  const email = req.email;
+  const vendorProduct = await userService.vendorAddingProduct(req.body, email);
+  return res.status(StatusCodes.CREATED).send(response.successful('Successfully added product', vendorProduct))
+
+  }catch(err){
+    console.log('Error while adding product by vendor', err);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
+  }
+
 }
