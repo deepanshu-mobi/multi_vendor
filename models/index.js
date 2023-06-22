@@ -4,7 +4,11 @@ const Product = require('./product');
 const Cart = require('./cart');
 const Order = require('./order')
 const ProductVendorMapping = require('./product_vendor_mapping')
-const ProductImage = require('./product_images')
+const ProductImage = require('./product_images');
+const CustomerAccessToken = require('./customer_access_token');
+const UserAccessToken = require('./user_access_token');
+
+
 
 //------------ Relationship mapping -------------------------------
 // Customer.hasMany(Order, { foreignKey: 'customerId' });
@@ -16,9 +20,9 @@ User.hasMany(ProductVendorMapping, { foreignKey: 'vendorId'});
 ProductVendorMapping.belongsTo(User, { foreignKey: 'vendorId'})
 Product.hasMany(ProductVendorMapping, { foreignKey: 'productId' });
 ProductVendorMapping.belongsTo(Product, { foreignKey: 'productId'})
-Product.hasMany(ProductImage, { foreignKey: 'productId' })
-
-
+Product.hasMany(ProductImage, { foreignKey: 'productId' });
+User.hasMany(UserAccessToken, { foreignKey: 'userId' });
+Customer.hasMany(CustomerAccessToken, { foreignKey: 'customerId' });
 
 
 module.exports = {
@@ -29,4 +33,6 @@ module.exports = {
   Order,
   ProductVendorMapping,
   ProductImage,
+  CustomerAccessToken,
+  UserAccessToken,
 }

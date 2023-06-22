@@ -1,6 +1,6 @@
-const { Product, ProductImage, ProductVendorMapping, User } = require('../models');
+const { Product, ProductImage } = require('../models');
 
-const addingNewProduct = async (body, email) => {
+const addingNewProduct = async (body) => {
 
     const { productName, description, price, image } = body;
 
@@ -15,13 +15,6 @@ const addingNewProduct = async (body, email) => {
         productId: product.productId,
     })
 
-    const user = await User.findOne({ where: { email } });
-    if(user){
-        await ProductVendorMapping.create({
-            productId:product.productId,    
-            vendorId: user.userId
-        })
-    }
     return product;
 }
 

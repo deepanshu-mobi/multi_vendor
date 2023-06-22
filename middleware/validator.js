@@ -3,6 +3,7 @@ const { StatusCodes } = require('http-status-codes')
 const { User } = require('../models')
 const constant = require('../utils/constant')
 const deleteImage = require('../utils/deleteImage')
+const { response } = require('../utils/commonRes')
 
 const expressValidator = (req, res, next) =>{
     
@@ -38,16 +39,29 @@ function isValidPassword(value)
 }
 
 const isAdmin = async (req, res, next) => {
-    const { email } = req.user
-    const user = await User.findOne({ where: { email }});
+    const email = req.email
+    const user = await User.findOne({ where: { email } });
 
     if(!user){
-        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only admin allow to access this endPoint' })
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint'))
     }else if(user.isEmailVerified === 0){
-        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only verified admin allow to access this endPoint' })
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only verified admin allow to access this endPoint'))
     }
     else if(user.role == constant.userType.vendor){
-        return res.status(StatusCodes.BAD_REQUEST).send({ mesg: 'Only admin allow to access this endPoint not vendors' }) 
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint not vendors')) 
+    }
+    next()
+}
+
+const isSuperAdmin = async (req, res, next) => {
+    const email  = req.email
+    const user = await User.findOne({ where: { email } });
+
+    if(!user){
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint'))
+    }
+    else if(user.role !== constant.userType.super_admin){
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint')) 
     }
     next()
 }
@@ -57,4 +71,5 @@ module.exports = {
     isValidPassword,
     isValidEmail,
     isAdmin,
+    isSuperAdmin,
 }

@@ -11,7 +11,7 @@
       "description": "Operation related to user( ADMIN || VENDOR)"
     },
     {
-      "name": "User - Customer",
+      "name": "Customer",
       "description": "Operation related to Customer"
     },
     {
@@ -30,6 +30,15 @@
       "get": {
         "summary": "Get all customers and only admins can access this endPoint",
         "tags": ["User"],
+        "parameters":[
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -165,7 +174,7 @@
     "/v1/customer/register": {
       "post": {
         "summary": "Customer registration",
-        "tags": ["User - Customer"],
+        "tags": ["Customer"],
         "requestBody": {
           "required": true,
           "content": {
@@ -216,7 +225,7 @@
     "/v1/customer/login": {
       "post": {
         "summary": "Customer login",
-        "tags": ["User - Customer"],
+        "tags": ["Customer"],
         "requestBody": {
           "required": true,
           "content": {
@@ -281,6 +290,15 @@
       "get": {
         "summary": "Only admin can get all the vendors",
         "tags": ["User"],
+        "parameters":[
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses":{
           "200": {
             "description": "Successful response"
@@ -298,21 +316,65 @@
       "get": {
         "summary": "fetch all products of vendor only admin allow to access this end point",
         "tags": ["User"],
-        "parameters": [
+        "parameters":[
           {
-          "name": "id",
-          "in": "query",
-          "description": "VendorId",
-          "required": true,
-          "type": "integer"
-        }
-      ],
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response"
           },
           "400": {
             "description": "Bad request"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/vendor/product": {
+      "post": {
+        "summary": "Vendor adding products",
+        "tags": ["User"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema" : {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "productId"
+                ]
+              }
+            }
+          }
+        },
+        "parameters":[
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
           },
           "500": {
             "description": "Internal server error"
@@ -358,6 +420,15 @@
             }
           }
         },
+        "parameters":[
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "Product Added successfully"
