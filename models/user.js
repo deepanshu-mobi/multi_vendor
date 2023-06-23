@@ -37,8 +37,8 @@ class User extends Model {}
       type: DataTypes.STRING
     },
     role: {
-      type: DataTypes.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),
-      defaultValue: constants.userType.vendor
+      type: DataTypes.ENUM(constants.userType.ADMIN, constants.userType.SUPER_ADMIN, constants.userType.VENDOR),
+      defaultValue: constants.userType.VENDOR
     },
   },
   {

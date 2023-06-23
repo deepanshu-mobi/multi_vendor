@@ -9,7 +9,7 @@ const isValidImage = (value, {req}) => {
     if(!image.mimetype.startsWith('image/')){
         throw new Error('Only image file is allowed')
     }
-    return value
+    return true
 }
 
 module.exports = {

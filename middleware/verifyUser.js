@@ -7,7 +7,7 @@ const isVendor = async (req, res, next) => {
 
     const { email } = req.email;
     const user = await User.findOne({ where: { email }});
-    if(user.role == constant.userType.vendor && user.role == constant.userType.admin && user.role == constant.userType.super_admin){
+    if(user.role == constant.userType.VENDOR && user.role == constant.userType.ADMIN && user.role == constant.userType.SUPER_ADMIN){
         next()
     }
     else{
