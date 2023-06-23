@@ -12,9 +12,7 @@ const expressValidator = (req, res, next) =>{
         if(req.file){
             deleteImage(req.file.path)
         }
-        return res.status(StatusCodes.BAD_REQUEST).send({
-            error: errors.array()[0].msg
-        })
+        return res.status(StatusCodes.BAD_REQUEST).send(response.failed(errors.array()[0].msg))
     }
     next()
 }
@@ -47,7 +45,7 @@ const isAdmin = async (req, res, next) => {
     }else if(user.isEmailVerified === 0){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only verified admin allow to access this endPoint'))
     }
-    else if(user.role == constant.userType.vendor){
+    else if(user.role == constant.userType.VENDOR){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint not vendors')) 
     }
     next()
@@ -60,7 +58,7 @@ const isSuperAdmin = async (req, res, next) => {
     if(!user){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint'))
     }
-    else if(user.role !== constant.userType.super_admin){
+    else if(user.role !== constant.userType.SUPER_ADMIN){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint')) 
     }
     next()
