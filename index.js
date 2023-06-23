@@ -11,13 +11,13 @@ app.set('view engine', 'ejs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-// sequelize.sync({alter:true})// use only when change something in schema
-// .then(() => {
-//     console.log('sync successfully');
-// })
-//   .catch((err) => {
-//     console.log('Error while sycing', err.message); 
-// });
+sequelize.sync({ alter: true})// use only when change something in schema
+.then(() => {
+    console.log('sync successfully');
+})
+  .catch((err) => {
+    console.log('Error while sycing', err.message);
+});
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 const apiRoutes = require('./routes/apiRoutes')
