@@ -15,6 +15,7 @@ const validateNewProduct = [
         if(price == 0){
             throw new Error('Price can not be 0')
         }
+        return true
     }),
     body('image')
     .custom(isValidImage)
