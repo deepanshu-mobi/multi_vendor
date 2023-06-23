@@ -23,10 +23,10 @@ const userRegisterValidator = [
     .notEmpty()
     .withMessage('Role is required')
     .custom( role => {
-        if(role == constant.userType.SUPER_ADMIN){
+        if(role == constant.UserType.SUPER_ADMIN){
             throw new Error('Only admin || vendor registration is allowed')
         }
-        else if(role != constant.userType.ADMIN && role != constant.userType.VENDOR){
+        else if(role != constant.UserType.ADMIN && role != constant.UserType.VENDOR){
             throw new Error('Not a valid role possible roles are ADMIN || VENDOR')
         }
         return true

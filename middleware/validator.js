@@ -45,7 +45,7 @@ const isAdmin = async (req, res, next) => {
     }else if(user.isEmailVerified === 0){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only verified admin allow to access this endPoint'))
     }
-    else if(user.role == constant.userType.VENDOR){
+    else if(user.role == constant.UserType.VENDOR){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint not vendors')) 
     }
     next()
@@ -58,7 +58,7 @@ const isSuperAdmin = async (req, res, next) => {
     if(!user){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint'))
     }
-    else if(user.role !== constant.userType.SUPER_ADMIN){
+    else if(user.role !== constant.UserType.SUPER_ADMIN){
         return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint')) 
     }
     next()
