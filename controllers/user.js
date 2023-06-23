@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
           if (user.isEmailVerified === 0) {
             return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email is not verified yet try after sometime later'));
           }
-          const token = jwt.sign({email: user.email}, serverConfig.SECRET, { expiresIn: 180 })//3min
+          const token = jwt.sign({email: user.email}, serverConfig.SECRET, { expiresIn: 3600 })//3min
 
           const body = {
             userId: user.userId,
