@@ -34,7 +34,7 @@ const findAllVendors = async (value) => {
     const users = await User.findAll(value);
     const vendors = [];
     users.forEach((user) => {
-        if(user.role == constant.userType.vendor){
+        if(user.role == constant.UserType.VENDOR){
             vendors.push(user)
         }
     })
