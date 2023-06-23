@@ -66,7 +66,7 @@ exports.findCustomers = async (req, res) => {
   try{
 
   const customers = await userService.findAllCustomers({ attributes: { exclude: ['password', 'token'] } });
-  return res.json(customers)
+  return res.status(StatusCodes.OK).send(response.successful('Successful', customers))
 
   }catch(err){
     console.log('Error while findAll customers',err)
@@ -79,7 +79,7 @@ exports.findVendors = async (req, res) => {
 
   try{
   const vendors = await userService.findAllVendors({attributes: { exclude: ['password', 'token'] }})
-  return res.status(StatusCodes.OK).send(vendors)
+  return res.status(StatusCodes.OK).send(response.successful('Successful', vendors))
   }catch(err){
     console.log('Error while finding all vendors', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
@@ -92,7 +92,7 @@ exports.findAllProductsOfVendor = async (req, res) => {
   try{
   const { id } = req.query;
   const vendors = await userService.findVendorProducts(id)
-  return res.status(StatusCodes.OK).send(vendors)
+  return res.status(StatusCodes.OK).send(response.successful('Successful', vendors))
   }catch(err){
     console.log('Error while finding vendor products', err);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
