@@ -14,5 +14,6 @@ module.exports = {
         EMAIL_OR_PASSWORD_MAY_BE_WRONG_PLEASE_TRY_AGAIN: 'Email or Password may be wrong please try again',
         USER_DOES_NOT_EXIST: 'User does not exist',
         SUCCESSFULLY_PRODUCT_ADDED: 'Successfully product added',
+        DELETED_SUCCESSFULLY: 'Deleted successfully'
     }
 }

@@ -13,8 +13,6 @@ const UserAccessToken = require('./user_access_token');
 //------------ Relationship mapping -------------------------------
 // Customer.hasMany(Order, { foreignKey: 'customerId' });
 // Product.hasMany(Order, { foreignKey: 'productId' });
-// Customer.hasMany(Cart, { foreignKey: 'customerId' });
-// Product.hasMany(Cart, { foreignKey: 'productId' });
 
 User.hasMany(ProductVendorMapping, { foreignKey: 'vendorId'});
 ProductVendorMapping.belongsTo(User, { foreignKey: 'vendorId'})
@@ -23,6 +21,9 @@ ProductVendorMapping.belongsTo(Product, { foreignKey: 'productId'})
 Product.hasMany(ProductImage, { foreignKey: 'productId' });
 User.hasMany(UserAccessToken, { foreignKey: 'userId' });
 Customer.hasMany(CustomerAccessToken, { foreignKey: 'customerId' });
+Customer.hasMany(Cart, { foreignKey: 'customerId' });
+Product.hasMany(Cart, { foreignKey: 'productId' });
+Cart.belongsTo(Product, { foreignKey: 'productId'})
 
 
 module.exports = {
