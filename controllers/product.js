@@ -18,9 +18,9 @@ exports.addProduct = async (req, res) => {
         productId: product.productId,
         productName: product.productName
     }
-    return res.status(StatusCodes.CREATED).send(response.successful('Product created successfully', resp))
+    return response(req, res, resp, StatusCodes.CREATED, 'Product created successfully', true)
 }catch(err){
     console.log('Error while creating new product',err);
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
 }
 }

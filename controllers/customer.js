@@ -14,10 +14,10 @@ exports.register = async (req, res) => {
     name: customer.name,
     accessToken: customer.token,
   };
-  return res.status(StatusCodes.OK).send(response.successful('Customer created successfully', resp));
+  return response(req, res, resp, StatusCodes.CREATED, 'Customer created successfully', true);
 }catch(err){
   console.log('Error while registering customer',err)
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed(err))
+  return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
 }
 
 };
