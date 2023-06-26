@@ -1,18 +1,9 @@
-const response = {
-    successful: (message, data) => {
-        return {
-            success: true,
-            message,
-            data
-        }
-    },
-    failed: (message, data) => {
-        return {
-            success: false,
-            message,
-            data: data || {}
-        }
-    }
+const response = (req, res, data, status, message, success) => {
+    return res.status(status).json({
+        success: success,
+        message: message,
+        data: data || {}
+    })
 }
 
 module.exports = {
