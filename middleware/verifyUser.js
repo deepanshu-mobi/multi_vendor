@@ -11,7 +11,7 @@ const isVendor = async (req, res, next) => {
         next()
     }
     else{
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Invalid access'))
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Invalid access', false)
     }
 }
 

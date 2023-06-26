@@ -7,12 +7,12 @@ const verifyToken = (req, res, next) => {
 
     const token = req.headers['access-token'];
     if(!token){
-        return res.status(StatusCodes.FORBIDDEN).send(response.failed('Access token is not provided'))
+        return response(req, res, null, StatusCodes.FORBIDDEN, 'Access token is not provided', false)
     }
 
     jwt.verify(token, serverConfig.SECRET, (err, decoded) => {
         if(err){
-            return res.status(StatusCodes.UNAUTHORIZED).send(response.failed('Unauthorized'))
+            return response(req, res, null, StatusCodes.UNAUTHORIZED, 'Unauthorized', false)
         }
         req.email = decoded.email;
         next()

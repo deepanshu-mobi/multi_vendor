@@ -12,7 +12,7 @@ const expressValidator = (req, res, next) =>{
         if(req.file){
             deleteImage(req.file.path)
         }
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed(errors.array()[0].msg))
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, errors.array()[0].msg, false)   
     }
     next()
 }
@@ -41,12 +41,12 @@ const isAdmin = async (req, res, next) => {
     const user = await User.findOne({ where: { email } });
 
     if(!user){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint'))
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only admin allow to access this endPoint', false)
     }else if(user.isEmailVerified === 0){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only verified admin allow to access this endPoint'))
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only verified admin allow to access this endPoint', false)
     }
     else if(user.role == constant.UserType.VENDOR){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only admin allow to access this endPoint not vendors')) 
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only admin allow to access this endPoint not vendors', false)
     }
     next()
 }
@@ -56,10 +56,10 @@ const isSuperAdmin = async (req, res, next) => {
     const user = await User.findOne({ where: { email } });
 
     if(!user){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint'))
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only super admin allow to access this endPoint', false)
     }
     else if(user.role !== constant.UserType.SUPER_ADMIN){
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Only super admin allow to access this endPoint')) 
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only super admin allow to access this endPoint', false)
     }
     next()
 }
