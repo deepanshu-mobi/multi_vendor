@@ -1,6 +1,7 @@
 const productService = require('../services/productService');
 const { StatusCodes } = require('http-status-codes');
-const { response } = require('../utils/commonRes')
+const { response } = require('../utils/commonRes');
+const constant = require('../utils/constant')
 
 exports.addProduct = async (req, res) => {
 
@@ -18,9 +19,9 @@ exports.addProduct = async (req, res) => {
         productId: product.productId,
         productName: product.productName
     }
-    return response(req, res, resp, StatusCodes.CREATED, 'Product created successfully', true)
+    return response(req, res, resp, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true)
 }catch(err){
     console.log('Error while creating new product',err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 }

@@ -3,7 +3,8 @@ const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcryptjs')
 const { response } = require('../utils/commonRes')
 const jwt = require('jsonwebtoken');
-const serverConfig = require('../config/server.config')
+const serverConfig = require('../config/server.config');
+const constant = require('../utils/constant');
 
 
 exports.register = async (req, res) => {
@@ -15,10 +16,10 @@ exports.register = async (req, res) => {
       email: user.email,
       role: user.role
     }
-    return response(req, res, resp, StatusCodes.CREATED, `${resp.role} created successfully`, true)
+    return response(req, res, resp, StatusCodes.CREATED, `${resp.role} ${constant.Message.CREATED_SUCCESSFULLY}`, true)
   }catch(err){
     console.log('Error while registering user', err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
 
@@ -33,7 +34,7 @@ exports.login = async (req, res) => {
         if (isValidPassword) {
 
           if (user.isEmailVerified === 0) {
-            return response(req, res, null, StatusCodes.BAD_REQUEST, 'Email is not verified yet try after sometime later', false)
+            return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.EMAIL_IS_NOT_VERIFIED_YET_TRY_AFTER_SOMETIME_LATER, false)
           }
           const token = jwt.sign({email: user.email}, serverConfig.SECRET, { expiresIn: 3600 })//3min
 
@@ -49,14 +50,14 @@ exports.login = async (req, res) => {
             name: user.name,
             accessToken: token
           };
-          return response(req, res, resp, StatusCodes.OK, 'Successfully loggedIn', true)
+          return response(req, res, resp, StatusCodes.OK, constant.Message.SUCCESSFULLY_LOGGEDIN, true)
         }
-        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Email or Password may be wrong please try again', false)
+        return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.EMAIL_OR_PASSWORD_MAY_BE_WRONG_PLEASE_TRY_AGAIN, false)
       }
-      return response(req, res, null, StatusCodes.BAD_REQUEST, 'User does not exist', false)
+      return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.USER_DOES_NOT_EXIST, false)
   }catch(err){
     console.log('Error while login user', err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
 
@@ -66,11 +67,11 @@ exports.findCustomers = async (req, res) => {
   try{
 
   const customers = await userService.findAllCustomers({ attributes: { exclude: ['password', 'token'] } });
-  return response(req, res, customers, StatusCodes.OK, 'Successful', true)
+  return response(req, res, customers, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
 
   }catch(err){
     console.log('Error while findAll customers',err)
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
 
@@ -79,10 +80,10 @@ exports.findVendors = async (req, res) => {
 
   try{
   const vendors = await userService.findAllVendors({attributes: { exclude: ['password', 'token'] }})
-  return response(req, res, vendors, StatusCodes.OK, 'Successful', true)
+  return response(req, res, vendors, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
   }catch(err){
     console.log('Error while finding all vendors', err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
 
@@ -92,10 +93,10 @@ exports.findAllProductsOfVendor = async (req, res) => {
   try{
   const { id } = req.query;
   const vendors = await userService.findVendorProducts(id)
-  return response(req, res, vendors, StatusCodes.OK, 'Successful', true)
+  return response(req, res, vendors, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
   }catch(err){
     console.log('Error while finding vendor products', err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
 
@@ -106,11 +107,11 @@ exports.addProductByVendor = async (req, res) => {
 
   const email = req.email;
   const vendorProduct = await userService.vendorAddingProduct(req.body, email);
-  return response(req, res, vendorProduct, StatusCodes.OK, 'Successfully added product', true)
+  return response(req, res, vendorProduct, StatusCodes.OK, constant.Message.SUCCESSFULLY_PRODUCT_ADDED, true)
 
   }catch(err){
     console.log('Error while adding product by vendor', err);
-    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, 'Internal server error', false)
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 
 }
