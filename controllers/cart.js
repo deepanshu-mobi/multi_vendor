@@ -1,0 +1,50 @@
+const cartService = require('../services/cartService');
+const constant = require('../utils/constant');
+const { response } = require('../utils/commonRes');
+const { StatusCodes } = require('http-status-codes')
+
+exports.addToCart = async (req, res) => {
+
+    try{
+    const email = req.email
+    const cart = await cartService.addingProductInCart(req.body, email);
+    return response(req, res, cart, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true)
+    }catch(err){
+        console.log('Error while creating cart', err);
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+    }
+}
+
+
+exports.clearCart = async (req, res) => {
+
+    try{
+
+    const email = req.email
+    const cartDetail = await cartService.deleteAllCartItems(email);
+    if(cartDetail == 0){
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Cart is empty', false)    
+    }
+    return response(req, res, null, StatusCodes.OK, constant.Message.DELETED_SUCCESSFULLY, true)
+
+    }catch(err){
+        console.log('Error while clearing cart', err);
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+    }
+}
+
+exports.removeProductInCart = async (req, res) => {
+    
+    try{
+    const email = req.email;
+    const { id } = req.query;
+    const cartDetail = await cartService.deleteProductInCart(id, email);
+    if(cartDetail === 0){
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Product is not found', false)
+    }
+    return response(req, res, null, StatusCodes.OK, constant.Message.DELETED_SUCCESSFULLY, true);
+    }catch(err){
+        console.log('Error while deleting product in cart', err);
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+    }
+}
