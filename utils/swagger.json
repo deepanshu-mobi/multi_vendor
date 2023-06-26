@@ -17,6 +17,10 @@
     {
       "name": "Product",
       "description": "Operation related to product"
+    },
+    {
+      "name": "Cart",
+      "description": "Operation related to cart"
     }
   ],
   "servers": [
@@ -432,6 +436,109 @@
         "responses": {
           "200": {
             "description": "Product Added successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/cart": {
+      "post": {
+        "summary": "add product to cart",
+        "tags":["Cart"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "integer",
+                    "example": 1
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "example": 3
+                  }
+                },
+                "required": [
+                  "productId",
+                  "quantity"
+                ]
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product added in cart successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/clear_cart": {
+      "delete": {
+        "summary": "clear all the product of cart",
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted Successfully"
+          }
+        }
+      }
+    },
+    "/v1/customer/delete_cart_product": {
+      "delete": {
+        "summary": "Delete cart product",
+        "tags": ["Cart"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Product id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cart product deleted successfully"
           },
           "400": {
             "description": "Invalid request payload"
