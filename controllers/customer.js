@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const serverConfig = require('../config/server.config');
 const bcrypt = require('bcryptjs');
 const { response } = require('../utils/commonRes')
+const constant = require('../utils/constant')
 
 exports.register = async (req, res) => {
   try{
@@ -14,28 +15,26 @@ exports.register = async (req, res) => {
     name: customer.name,
     accessToken: customer.token,
   };
-  return res.status(StatusCodes.OK).send(response.successful('Customer created successfully', resp));
+  return response(req, res, resp, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true);
 }catch(err){
   console.log('Error while registering customer',err)
-  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed(err))
+  return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 
 };
 
 exports.verifyEmail = async (req, res) => {
-
+  
   try{
     const { token } = req.query;
     if(!token){
-        return res.status(StatusCodes.BAD_REQUEST).send({ message: 'Token is not provided' })
+      return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.TOKEN_IS_NOT_PROVIDED, false);
     }
     let message = '';
       jwt.verify(token, serverConfig.SECRET, async (err, decoded) => {
         if (err) {
           message = err.message
-          return res.status(StatusCodes.BAD_REQUEST).send({
-            message: err.message,
-          });
+          return response(req, res, null, StatusCodes.BAD_REQUEST, { message: err.message }, false);
         } 
         const customerId = decoded.id
         const customer = await Customer.findOne({ where: { customerId } });
@@ -45,7 +44,7 @@ exports.verifyEmail = async (req, res) => {
       });
     }catch(err){
       console.log('Error while verifying Email',err);
-      return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
+      return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
     }
 
 };
@@ -60,7 +59,7 @@ exports.login = async (req, res) => {
 
     if (isValidPassword) {
       if (customer.isEmailVerified === 0) {
-        return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email is not verified yet try after sometime later'));
+        return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.EMAIL_IS_NOT_VERIFIED_YET_TRY_AFTER_SOMETIME_LATER, false);
       }
 
       const token = jwt.sign({email: customer.email}, serverConfig.SECRET, { expiresIn: 180 })//3min
@@ -78,17 +77,15 @@ exports.login = async (req, res) => {
         name: customer.name,
         accessToken: token
       };
-
-      return res.status(StatusCodes.OK).send(response.successful('Successfully loggedIn', resp));
+      return response(req, res, resp, StatusCodes.OK, constant.Message.SUCCESSFULLY_LOGGEDIN, true);
     }
-
-    return res.status(StatusCodes.BAD_REQUEST).send(response.failed('Email or Password may be wrong please try again'));
+    return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.EMAIL_OR_PASSWORD_MAY_BE_WRONG_PLEASE_TRY_AGAIN, false);
   }
 
-  return res.status(StatusCodes.BAD_REQUEST).send(response.failed('User does not exist'));
+  return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.USER_DOES_NOT_EXIST, false);
   }catch(err){
     console.log('Error while loggin',err)
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(response.failed('Internal server error'))
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 };
 
