@@ -13,9 +13,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+      stripeSessionId: {
+        type: Sequelize.INTEGER
       },
       totalPrice: {
         type: Sequelize.INTEGER,
