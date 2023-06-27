@@ -15,9 +15,8 @@ const sequelize  = require('../config/db')
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    productId: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    stripeSessionId: {
+      type: DataTypes.INTEGER
     },
     totalPrice: {
       type: DataTypes.INTEGER,
