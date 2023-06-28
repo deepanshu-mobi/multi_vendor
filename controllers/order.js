@@ -30,8 +30,8 @@ exports.stripeWebhook = async (req, res) => {
         case 'checkout.session.expired': {
             const session = event.data.object;
             const order = await Order.findOne({ where: {stripeSessionId: session.id}});
-            if(order && order.orderStatus == 'PENDING'){
-                await order.update({orderStatus: 'FAILED'})
+            if(order && order.orderStatus == constant.OrderStatus.PENDING){
+                await order.update({orderStatus: constant.OrderStatus.FAILED})
             }
             console.log('checkout.session.expired', session)
             break;
