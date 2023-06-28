@@ -9,7 +9,7 @@ exports.stripeWebhook = async (req, res) => {
 
     let event;
     const signature = req.headers['stripe-signature'];
-    const endPointSecret = 'whsec_32e93f7afb3f6c965bf589c6e73abb8114378f49efac5d1991fda4e36037e925';
+    const endPointSecret = process.env.END_POINT_SECRET;
 
     try{
     event = stripe.webhooks.constructEvent(req.body, signature, endPointSecret)
@@ -22,7 +22,7 @@ exports.stripeWebhook = async (req, res) => {
         case 'checkout.session.completed': {
             const session = event.data.object;
             const customer = await stripe.customers.retrieve(session.customer)
-            // await Cart.destroy({ where : {customerId: customer.metadata.customerId }})
+            await Cart.destroy({ where : {customerId: customer.metadata.customerId }})
             await orderService.updateOrderBySession(session)
             console.log('checkout.session.completed', session);
             break;
