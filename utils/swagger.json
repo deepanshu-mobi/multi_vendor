@@ -21,6 +21,10 @@
     {
       "name": "Cart",
       "description": "Operation related to cart"
+    },
+    {
+      "name": "Payment",
+      "description": "Operation related to payment"
     }
   ],
   "servers": [
@@ -539,6 +543,32 @@
         "responses": {
           "200": {
             "description": "Cart product deleted successfully"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/checkout": {
+      "post": {
+        "summary": "Create checkout session to start the payment process",
+        "tags": ["Payment"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created checkout session"
           },
           "400": {
             "description": "Invalid request payload"
