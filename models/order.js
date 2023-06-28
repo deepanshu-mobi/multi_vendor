@@ -16,7 +16,7 @@ const sequelize  = require('../config/db')
       allowNull: false
     },
     stripeSessionId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     },
     totalPrice: {
       type: DataTypes.INTEGER,
@@ -29,6 +29,24 @@ const sequelize  = require('../config/db')
       type: DataTypes.ENUM('PENDING', 'APPROVED', 'CANCELLED', 'FAILED'),
       defaultValue: 'PENDING'
     },
+    shippingAddressCity: {
+      type: DataTypes.STRING
+    },
+    shippingAddressCountry: {
+      type: DataTypes.STRING
+    },
+    shippingAddressLine1: {
+      type: DataTypes.STRING
+    },
+    shippingAddressLine2: {
+      type: DataTypes.STRING
+    },
+    shippingAddressPostalCode: {
+      type: DataTypes.STRING
+    },
+    shippingAddressState: {
+      type: DataTypes.STRING
+    }
   }, 
   {
     sequelize,
