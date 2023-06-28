@@ -1,4 +1,5 @@
 const { Order, Cart, Product } = require('../models');
+const constant = require('../utils/constant')
 
 const createOrder = async (customerId) => {
 
@@ -38,10 +39,12 @@ const updateOrderBySession = async (session) => {
         shippingAddressState: address.state
     }
 
+    let orderStatus;
     if(session.payment_status == 'paid'){
         const order = await Order.findOne({ where: { stripeSessionId: session.id }});
         if(order){
-            await order.update({orderStatus: 'APPROVED', ...addressDetails})
+            orderStatus = constant.OrderStatus.APPROVED
+            await order.update({orderStatus, ...addressDetails})
         }
     }
 }

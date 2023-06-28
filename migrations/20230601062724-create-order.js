@@ -1,5 +1,7 @@
 'use strict';
 
+const constant = require('../utils/constant');
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('orders', {
@@ -24,8 +26,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       orderStatus: {
-        type: Sequelize.ENUM('PENDING', 'APPROVED', 'CANCELLED', 'FAILED'),
-        defaultValue: 'PENDING'
+        type: Sequelize.ENUM(constant.OrderStatus.PENDING, constant.OrderStatus.APPROVED, constant.OrderStatus.CANCELLED, constant.OrderStatus.FAILED),
+        defaultValue: constant.OrderStatus.PENDING
       },
       shippingAddressCity: {
         type: Sequelize.STRING

@@ -1,6 +1,7 @@
 'use strict';
 const { Model, DataTypes } = require('sequelize');
-const sequelize  = require('../config/db')
+const sequelize  = require('../config/db');
+const constant = require('../utils/constant')
 
   class Order extends Model {}
 
@@ -26,8 +27,8 @@ const sequelize  = require('../config/db')
       type: DataTypes.INTEGER
     },
     orderStatus: {
-      type: DataTypes.ENUM('PENDING', 'APPROVED', 'CANCELLED', 'FAILED'),
-      defaultValue: 'PENDING'
+      type: DataTypes.ENUM(constant.OrderStatus.PENDING, constant.OrderStatus.APPROVED, constant.OrderStatus.CANCELLED, constant.OrderStatus.FAILED),
+      defaultValue: constant.OrderStatus.PENDING
     },
     shippingAddressCity: {
       type: DataTypes.STRING
