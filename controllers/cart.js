@@ -38,6 +38,9 @@ exports.removeProductInCart = async (req, res) => {
     try{
     const email = req.email;
     const { id } = req.query;
+    if(!id) {
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'ProductId is not provided', false)
+    }
     const cartDetail = await cartService.deleteProductInCart(id, email);
     if(cartDetail === 0){
         return response(req, res, null, StatusCodes.BAD_REQUEST, 'Product is not found', false)
