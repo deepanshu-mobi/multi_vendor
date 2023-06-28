@@ -2,10 +2,13 @@ const serverConfig = require('./config/server.config');
 const sequelize = require('./config/db');
 const swaggerUi = require('swagger-ui-express')
 const swaggerDoc = require('./utils/swagger.json')
+const orderController = require('./controllers/order')
 const express = require('express');
 const app = express();
 
 
+
+app.post('/webhook/endPoint', express.raw({ type: 'application/json' }), orderController.stripeWebhook)
 
 app.set('view engine', 'ejs')
 app.use(express.json());
