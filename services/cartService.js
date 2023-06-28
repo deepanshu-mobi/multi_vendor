@@ -12,7 +12,7 @@ const addingProductInCart = async (body, email) => {
     const cart = await Cart.create({
         productId,
         customerId,
-        totalPrice: price,
+        totalPrice: price * quantity,
         totalQuantity: quantity,
     });
     const cartD = {
