@@ -15,5 +15,11 @@ module.exports = {
         USER_DOES_NOT_EXIST: 'User does not exist',
         SUCCESSFULLY_PRODUCT_ADDED: 'Successfully product added',
         DELETED_SUCCESSFULLY: 'Deleted successfully'
+    },
+    OrderStatus: {
+        PENDING: 'PENDING',
+        FAILED: 'FAILED',
+        APPROVED: 'APPROVED',
+        CANCELLED: 'CANCELLED'
     }
 }
