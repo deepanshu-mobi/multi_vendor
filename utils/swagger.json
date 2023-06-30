@@ -30,7 +30,7 @@
   "servers": [
     {
       "url": "http://localhost:7777",
-      "description": "HTTP server"
+      "description": "Local server"
     }
   ],
   "paths": {
@@ -569,6 +569,32 @@
         "responses": {
           "200": {
             "description": "Successfully created checkout session"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/cart_products": {
+      "get": {
+        "summary": "Get all the cart products of customer",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
           },
           "400": {
             "description": "Invalid request payload"
