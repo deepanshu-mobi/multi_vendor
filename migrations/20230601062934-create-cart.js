@@ -13,17 +13,17 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      productId: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
       totalQuantity: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        defaultValue: 0
       },
       totalPrice: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        defaultValue: 0
+      },
+      totalCartItems: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
