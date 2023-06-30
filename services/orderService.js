@@ -1,21 +1,20 @@
-const { Order, Cart, Product } = require('../models');
+const { Order, Cart, Product, CartProduct, OrderProduct } = require('../models');
 const constant = require('../utils/constant')
 
 const createOrder = async (customerId) => {
 
-    const cartProduct = await Cart.findAll({ where: { customerId }, include: {model: Product, attributes: ['productName', 'price']}});
+    const cartProduct = await Cart.findOne({ where: { customerId }, include: {model: CartProduct, include: {model: Product, attributes: ['productName', 'price'] }}});
 
-    let totalPrice = 0;
-    let totalQuantity = 0;
+
+    let totalPrice = cartProduct.totalPrice;
+    let totalQuantity = cartProduct.totalQuantity;
     let productDetails = []
-    cartProduct.forEach(item => {
-        totalPrice += item.totalPrice,
-        totalQuantity += item.totalQuantity
+    cartProduct.cart_products.forEach(item => {
         productDetails.push({
             productId: item.productId,
             productName: item.Product.productName,
             productPrice: item.Product.price,
-            quantity: item.totalQuantity
+            quantity: item.quantity
         })
     })
     const orderDetail = await Order.create({
@@ -23,7 +22,9 @@ const createOrder = async (customerId) => {
         totalPrice,
         totalQuantity
     });
-    return { orderDetail, productDetails}
+
+    await createOrderItems(orderDetail.orderId, productDetails)
+    return { orderDetail, productDetails }
 };
 
 const updateOrderBySession = async (session) => {
@@ -47,6 +48,16 @@ const updateOrderBySession = async (session) => {
             await order.update({orderStatus, ...addressDetails})
         }
     }
+}
+
+const createOrderItems = async (orderId, productsDetails) =>{
+
+    const updatedProducts = productsDetails.map((item) => {
+        item.orderId = orderId
+        return item;
+    })
+    await OrderProduct.bulkCreate(updatedProducts);
+
 }
 
 module.exports = {
