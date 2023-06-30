@@ -45,9 +45,21 @@ exports.removeProductInCart = async (req, res) => {
     if(cartDetail === 0){
         return response(req, res, null, StatusCodes.BAD_REQUEST, 'Product is not found', false)
     }
-    return response(req, res, null, StatusCodes.OK, constant.Message.DELETED_SUCCESSFULLY, true);
+    return response(req, res, cartDetail, StatusCodes.OK, constant.Message.DELETED_SUCCESSFULLY, true);
     }catch(err){
         console.log('Error while deleting product in cart', err);
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+    }
+}
+
+exports.cartProducts = async (req, res) => {
+
+    try{
+    const email = req.email;
+    const cartProducts = await cartService.getAllCartProducts(email);
+    return response(req, res, cartProducts, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
+    }catch(err){
+        console.log('Error while fetching cart products', err);
         return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
     }
 }

@@ -32,8 +32,8 @@ module.exports = {
         defaultValue: 0
       },
       role: {
-        type: Sequelize.ENUM(constants.userType.admin, constants.userType.super_admin, constants.userType.vendor),
-        defaultValue: constants.userType.vendor
+        type: Sequelize.ENUM(constants.UserType.ADMIN, constants.UserType.SUPER_ADMIN, constants.UserType.VENDOR),
+        defaultValue: constants.UserType.VENDOR
       },
       token: {
         type: Sequelize.STRING

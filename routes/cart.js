@@ -5,6 +5,7 @@ const { verifyToken } = require('../middleware/auth.jwt')
 router.use(verifyToken)
 router.post('/customer/cart', cartController.addToCart);
 router.delete('/customer/clear_cart', cartController.clearCart);
-router.delete('/customer/delete_cart_product', cartController.removeProductInCart)
+router.delete('/customer/delete_cart_product', cartController.removeProductInCart);
+router.get('/customer/cart_proudcts', cartController.cartProducts)
 
 module.exports = router;
