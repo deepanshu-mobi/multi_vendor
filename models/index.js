@@ -7,6 +7,8 @@ const ProductVendorMapping = require('./product_vendor_mapping')
 const ProductImage = require('./product_images');
 const CustomerAccessToken = require('./customer_access_token');
 const UserAccessToken = require('./user_access_token');
+const CartProduct = require('./cartproducts');
+const OrderProduct = require('./orderproducts')
 
 
 
@@ -20,11 +22,15 @@ Product.hasMany(ProductImage, { foreignKey: 'productId' });
 User.hasMany(UserAccessToken, { foreignKey: 'userId' });
 Customer.hasMany(CustomerAccessToken, { foreignKey: 'customerId' });
 Customer.hasMany(Cart, { foreignKey: 'customerId' });
-Product.hasMany(Cart, { foreignKey: 'productId' });
-Cart.belongsTo(Product, { foreignKey: 'productId'});
 Customer.hasMany(Order, { foreignKey: 'customerId' });
 Order.belongsTo(Customer, { foreignKey: 'customerId' });
 
+Cart.hasMany(CartProduct, { foreignKey: 'cartId' });
+CartProduct.belongsTo(Cart, { foreignKey: 'cartId' });
+Product.hasMany(CartProduct, { foreignKey: 'productId' });
+CartProduct.belongsTo(Product, { foreignKey: 'productId' });
+Order.hasOne(OrderProduct, { foreignKey: 'orderId' });
+OrderProduct.belongsTo(Order, { foreignKey: 'orderId' });
 
 module.exports = {
   Customer,
@@ -36,4 +42,6 @@ module.exports = {
   ProductImage,
   CustomerAccessToken,
   UserAccessToken,
+  CartProduct,
+  OrderProduct,
 }
