@@ -62,7 +62,7 @@ exports.login = async (req, res) => {
         return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.EMAIL_IS_NOT_VERIFIED_YET_TRY_AFTER_SOMETIME_LATER, false);
       }
 
-      const token = jwt.sign({email: customer.email}, serverConfig.SECRET, { expiresIn: 180 })//3min
+      const token = jwt.sign({email: customer.email}, serverConfig.SECRET, { expiresIn: 18000 })//3min
 
       const body = {
         customerId: customer.customerId,
