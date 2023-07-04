@@ -1,14 +1,15 @@
 
 const isValidImage = (value, {req}) => {
 
-    if(!req.file || !req.file.filename){
+    const images = req.files;
+    images.forEach((file) => {
+        if(!file || !file.filename){
         throw new Error('Image file is required')
-    }
-
-    const image = req.file
-    if(!image.mimetype.startsWith('image/')){
-        throw new Error('Only image file is allowed')
-    }
+        }
+        if(!file.mimetype.startsWith('image/')){
+            throw new Error('Only image file is allowed')
+        }
+    });
     return true
 }
 
