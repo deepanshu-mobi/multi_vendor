@@ -7,7 +7,6 @@ const createOrder = async (customerId) => {
 
 
     let totalPrice = cartProduct.totalPrice;
-    let totalQuantity = cartProduct.totalQuantity;
     let productDetails = []
     cartProduct.cart_products.forEach(item => {
         productDetails.push({
@@ -20,7 +19,6 @@ const createOrder = async (customerId) => {
     const orderDetail = await Order.create({
         customerId,
         totalPrice,
-        totalQuantity
     });
 
     await createOrderItems(orderDetail.orderId, productDetails)
