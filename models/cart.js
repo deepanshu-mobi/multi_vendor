@@ -15,14 +15,6 @@ Cart.init({
     type: DataTypes.INTEGER,
     allowNull: false
   },
-  totalQuantity: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
-  },
-  totalPrice: {
-    type: DataTypes.INTEGER,
-    defaultValue: 0
-  },
   totalCartItems: {
     type: DataTypes.INTEGER,
     defaultValue: 0
