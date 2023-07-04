@@ -12,7 +12,7 @@ exports.addProduct = async (req, res) => {
         productName: productName,
         description: description,
         price: price,
-        image: req.file.filename
+        image: req.files
     }
     const product = await productService.addingNewProduct(body);
     const resp = {
