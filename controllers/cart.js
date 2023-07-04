@@ -57,6 +57,9 @@ exports.cartProducts = async (req, res) => {
     try{
     const email = req.email;
     const cartProducts = await cartService.getAllCartProducts(email);
+    if(!cartProducts.cart_products.length){
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Cart is empty', false)
+    }
     return response(req, res, cartProducts, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
     }catch(err){
         console.log('Error while fetching cart products', err);
