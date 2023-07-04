@@ -96,7 +96,7 @@ exports.updateCartProductQuantity = async (req, res) => {
   const email = req.email;
   const cartProduct = await customerService.updateProductQuantity(req.body, email);
   if(!cartProduct){
-    return response(req, res, cartProduct, StatusCodes.BAD_REQUEST, 'Given quantity is same as before', false)
+    return response(req, res, cartProduct, StatusCodes.BAD_REQUEST, 'Given product quantity is same as before quantity', false)
   }
   return response(req, res, cartProduct, StatusCodes.OK, constant.Message.SUCCESSFUL, true);
   
