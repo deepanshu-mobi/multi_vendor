@@ -22,9 +22,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      totalQuantity: {
-        type: Sequelize.INTEGER
-      },
       orderStatus: {
         type: Sequelize.ENUM(constant.OrderStatus.PENDING, constant.OrderStatus.APPROVED, constant.OrderStatus.CANCELLED, constant.OrderStatus.FAILED),
         defaultValue: constant.OrderStatus.PENDING

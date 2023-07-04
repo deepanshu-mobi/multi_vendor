@@ -1,5 +1,4 @@
-const { Cart, Customer, Product, CartProduct } = require('../models');
-const cartProducts = require('../models/cartproducts');
+const { Cart, Customer, Product, CartProduct, ProductImage } = require('../models');
 
 
 const addingProductInCart = async (body, email) => {
@@ -12,13 +11,13 @@ const addingProductInCart = async (body, email) => {
 
     const customerCart = await Cart.findOne({ where: { customerId }});
     if(customerCart){  
-        const cartProduct = await CartProduct.create({
+        await CartProduct.create({
             productId,
             cartId: customerCart.cartId,
             quantity: quantity,
             price: quantity * price
         })
-        const updatedCart = await customerCart.update({totalCartItems: customerCart.totalCartItems + 1, totalPrice: customerCart.totalPrice + cartProduct.price, totalQuantity: customerCart.totalQuantity + cartProduct.quantity});
+        const updatedCart = await customerCart.update({ totalCartItems: customerCart.totalCartItems + 1 });
         return updatedCart;
     }
 
@@ -26,16 +25,14 @@ const addingProductInCart = async (body, email) => {
         customerId,
         totalCartItems: 1
     });
-    const cartProduct = await CartProduct.create({
+    await CartProduct.create({
         productId,
         cartId: cart.cartId,
         quantity: quantity,
         price: quantity * price
     })
 
-    const updatedCart = await cart.update({totalPrice: cartProduct.price, totalQuantity: cartProduct.quantity})
-
-    return updatedCart;
+    return cart;
 }
 
 const deleteAllCartItems = async (email) => {
@@ -51,11 +48,8 @@ const deleteProductInCart = async (id, email) => {
     let cart;
     const { customerId } = await Customer.findOne({ where: { email } });
     const cartProducts = await Cart.findOne({ where: { customerId }, include: { model: CartProduct, where: { productId } }})
-    const item = cartProducts.cart_products[0]
     if(productId == cartProducts.cart_products[0].productId){
         const body = {
-            totalPrice: cartProducts.totalPrice - item.price, 
-            totalQuantity: cartProducts.totalQuantity - item.quantity, 
             totalCartItems: cartProducts.totalCartItems-1
         }
         await Cart.update(body, { where: { cartId: cartProducts.cartId }});
@@ -69,7 +63,7 @@ const deleteProductInCart = async (id, email) => {
 const getAllCartProducts = async (email) => {
 
     const { customerId } = await Customer.findOne({ where: { email } });
-    const cartProducts = await Cart.findOne({ where: { customerId }, attributes: { exclude: ['createdAt', 'updatedAt'] }, include: { model: CartProduct }});
+    const cartProducts = await Cart.findOne({ where: { customerId }, attributes: { exclude: ['createdAt', 'updatedAt'] }, include: { model: CartProduct, include: { model: Product,  include: { model: ProductImage, attributes: ['image']},} }});
     return cartProducts;
 }
 

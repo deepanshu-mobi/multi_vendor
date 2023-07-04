@@ -23,9 +23,6 @@ const constant = require('../utils/constant')
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    totalQuantity: {
-      type: DataTypes.INTEGER
-    },
     orderStatus: {
       type: DataTypes.ENUM(constant.OrderStatus.PENDING, constant.OrderStatus.APPROVED, constant.OrderStatus.CANCELLED, constant.OrderStatus.FAILED),
       defaultValue: constant.OrderStatus.PENDING

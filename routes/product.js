@@ -6,6 +6,6 @@ const { expressValidator, isSuperAdmin } = require('../middleware/validator')
 const { verifyToken } = require('../middleware/auth.jwt')
 
 router.use(verifyToken)
-router.post('/user/product', isSuperAdmin, multer.single('image'), validateNewProduct, expressValidator, productController.addProduct)
+router.post('/user/product', isSuperAdmin, multer.array('image'), validateNewProduct, expressValidator, productController.addProduct)
 
 module.exports = router
