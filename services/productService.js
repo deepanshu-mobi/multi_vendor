@@ -10,10 +10,14 @@ const addingNewProduct = async (body) => {
         price,
     })
 
-    await ProductImage.create({
-        image,
-        productId: product.productId,
-    })
+    if(image){
+        image.map(async (item) => {
+            await ProductImage.create({
+                image: item.filename,
+                productId: product.productId,
+            })
+        })
+    }
 
     return product;
 }
