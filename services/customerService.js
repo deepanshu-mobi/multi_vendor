@@ -57,12 +57,8 @@ const updateProductQuantity = async (body, email) => {
   let customerCartUpdated;
   if(quantity > product.quantity) {
     await CartProduct.update({quantity, price: product.Product.price * quantity }, { where: { cartId: customerCart.cartId, productId: product.productId }});
-    const newTotalPrice = product.Product.price * quantity - product.price
-    await customerCart.update({ totalQuantity: customerCart.totalQuantity + ( quantity - product.quantity ), totalPrice: customerCart.totalPrice + newTotalPrice })
   }else if(quantity < product.quantity && !quantity == 0){
     await CartProduct.update({quantity, price: product.Product.price * quantity }, { where: { cartId: customerCart.cartId, productId: product.productId }});
-    const newTotalPrice = product.price - product.Product.price * quantity
-    await customerCart.update({ totalQuantity: customerCart.totalQuantity - (product.quantity - quantity ), totalPrice: customerCart.totalPrice - newTotalPrice })
     customerCartUpdated = await Cart.findOne({ where: { customerId }, include: { model: CartProduct, where: { productId } }});
   }
   else if(quantity == product.quantity){
