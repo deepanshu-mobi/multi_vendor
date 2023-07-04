@@ -1,4 +1,4 @@
-const { Cart, Customer, Product, CartProduct } = require('../models');
+const { Cart, Customer, Product, CartProduct, ProductImage } = require('../models');
 
 
 const addingProductInCart = async (body, email) => {
@@ -63,7 +63,7 @@ const deleteProductInCart = async (id, email) => {
 const getAllCartProducts = async (email) => {
 
     const { customerId } = await Customer.findOne({ where: { email } });
-    const cartProducts = await Cart.findOne({ where: { customerId }, attributes: { exclude: ['createdAt', 'updatedAt'] }, include: { model: CartProduct, include: { model: Product } }});
+    const cartProducts = await Cart.findOne({ where: { customerId }, attributes: { exclude: ['createdAt', 'updatedAt'] }, include: { model: CartProduct, include: { model: Product,  include: { model: ProductImage, attributes: ['image']},} }});
     return cartProducts;
 }
 
