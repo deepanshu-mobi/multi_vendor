@@ -90,3 +90,18 @@ exports.login = async (req, res) => {
 };
 
 
+exports.updateCartProductQuantity = async (req, res) => {
+
+  try{
+  const email = req.email;
+  const cartProduct = await customerService.updateProductQuantity(req.body, email);
+  if(!cartProduct){
+    return response(req, res, cartProduct, StatusCodes.BAD_REQUEST, 'Given quantity is same as before', false)
+  }
+  return response(req, res, cartProduct, StatusCodes.OK, constant.Message.SUCCESSFUL, true);
+  
+}catch(err){
+  console.log('Error while updating product quantity', err);
+  return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+}
+}
