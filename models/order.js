@@ -27,23 +27,8 @@ const constant = require('../utils/constant')
       type: DataTypes.ENUM(constant.OrderStatus.PENDING, constant.OrderStatus.APPROVED, constant.OrderStatus.CANCELLED, constant.OrderStatus.FAILED),
       defaultValue: constant.OrderStatus.PENDING
     },
-    shippingAddressCity: {
-      type: DataTypes.STRING
-    },
-    shippingAddressCountry: {
-      type: DataTypes.STRING
-    },
-    shippingAddressLine1: {
-      type: DataTypes.STRING
-    },
-    shippingAddressLine2: {
-      type: DataTypes.STRING
-    },
-    shippingAddressPostalCode: {
-      type: DataTypes.STRING
-    },
-    shippingAddressState: {
-      type: DataTypes.STRING
+    customerLocationId: {
+      type: DataTypes.INTEGER,
     }
   }, 
   {
