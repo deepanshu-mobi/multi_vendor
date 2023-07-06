@@ -14,7 +14,7 @@ app.set('view engine', 'ejs')
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
-sequelize.sync({ alter: true})// use only when change something in schema
+sequelize.sync({ alter: true})// use only when something changes in schema
 .then(() => {
     console.log('sync successfully');
 })

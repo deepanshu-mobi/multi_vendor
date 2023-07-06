@@ -8,7 +8,8 @@ const ProductImage = require('./product_images');
 const CustomerAccessToken = require('./customer_access_token');
 const UserAccessToken = require('./user_access_token');
 const CartProduct = require('./cartproducts');
-const OrderProduct = require('./orderproducts')
+const OrderProduct = require('./orderproducts');
+const CustomerLocation = require('./customer_location');
 
 
 
@@ -31,6 +32,8 @@ Product.hasMany(CartProduct, { foreignKey: 'productId' });
 CartProduct.belongsTo(Product, { foreignKey: 'productId' });
 Order.hasOne(OrderProduct, { foreignKey: 'orderId' });
 OrderProduct.belongsTo(Order, { foreignKey: 'orderId' });
+// Customer.hasMany(CustomerLocation, { foreignKey: 'customerId' });
+// CustomerLocation.belongsTo(Customer, { foreignKey: 'customerId' });
 
 module.exports = {
   Customer,
@@ -44,4 +47,5 @@ module.exports = {
   UserAccessToken,
   CartProduct,
   OrderProduct,
+  CustomerLocation,
 }
