@@ -64,16 +64,6 @@ const isSuperAdmin = async (req, res, next) => {
     next()
 }
 
-const isAdminOrCustomer = async (req, res, next) => {
-
-    const email = req.email;
-    const user = await User.findOne({ where: { email } });
-    if(user && user.role == constant.UserType.VENDOR){
-        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only owner or admin allow to access this endPoint', false)
-    }
-    next()
-
-}
 
 module.exports = {
     expressValidator,
@@ -81,5 +71,4 @@ module.exports = {
     isValidEmail,
     isAdmin,
     isSuperAdmin,
-    isAdminOrCustomer,
 }
