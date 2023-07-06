@@ -34,6 +34,8 @@ Order.hasOne(OrderProduct, { foreignKey: 'orderId' });
 OrderProduct.belongsTo(Order, { foreignKey: 'orderId' });
 // Customer.hasMany(CustomerLocation, { foreignKey: 'customerId' });
 // CustomerLocation.belongsTo(Customer, { foreignKey: 'customerId' });
+Order.hasOne(CustomerLocation, { foreignKey: 'customerLocationId' });
+CustomerLocation.belongsTo(Order, { foreignKey: 'customerLocationId' });
 
 module.exports = {
   Customer,
