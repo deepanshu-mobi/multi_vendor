@@ -22,9 +22,9 @@ exports.stripeWebhook = async (req, res) => {
         case 'checkout.session.completed': {
             const session = event.data.object;
             const customer = await stripe.customers.retrieve(session.customer)
-            const email = customer.email
-            await Cart.destroy({ where : {customerId: customer.metadata.customerId }})
-            await orderService.updateOrderBySession(session, email)
+            const customerId = customer.metadata.customerId
+            await Cart.destroy({ where : { customerId }})
+            await orderService.updateOrderBySession(session, customerId)
             console.log('checkout.session.completed', session);
             break;
         }
@@ -87,7 +87,7 @@ exports.createCheckoutSession = async (req, res) => {
         line_items: stripeLineItems,
         expand: ['line_items'],
         customer: customer.id,
-        success_url: 'https://checkout.stripe.com/test/success',
+        success_url: 'https://mpbupdate.mobikasa.net',
         cancel_url: 'https://checkout.stripe.com/test/cancelled'
     });
     await orderDetail.update({stripeSessionId: session.id})
