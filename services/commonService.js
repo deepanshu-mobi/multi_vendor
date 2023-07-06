@@ -22,9 +22,6 @@ const findAllLocationsOfCustomer = async (email, id) => {
             }
             return customerLocations;
         }
-        else{
-            return { message: 'customerId is not provided in the params' }
-        }
     }
 }
 
