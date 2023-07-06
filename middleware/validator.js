@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator")
 const { StatusCodes } = require('http-status-codes')
-const { User } = require('../models')
+const { User, Customer } = require('../models')
 const constant = require('../utils/constant')
 const deleteImage = require('../utils/deleteImage')
 const { response } = require('../utils/commonRes')
@@ -64,10 +64,22 @@ const isSuperAdmin = async (req, res, next) => {
     next()
 }
 
+const isAdminOrCustomer = async (req, res, next) => {
+
+    const email = req.email;
+    const user = await User.findOne({ where: { email } });
+    if(user && user.role == constant.UserType.VENDOR){
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'Only owner or admin allow to access this endPoint', false)
+    }
+    next()
+
+}
+
 module.exports = {
     expressValidator,
     isValidPassword,
     isValidEmail,
     isAdmin,
     isSuperAdmin,
+    isAdminOrCustomer,
 }
