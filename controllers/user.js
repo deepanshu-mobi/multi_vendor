@@ -1,4 +1,5 @@
 const userService = require('../services/userService');
+const commonService = require('../services/commonService');
 const { StatusCodes } = require('http-status-codes');
 const bcrypt = require('bcryptjs')
 const { response } = require('../utils/commonRes')
@@ -111,6 +112,29 @@ exports.addProductByVendor = async (req, res) => {
 
   }catch(err){
     console.log('Error while adding product by vendor', err);
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+  }
+
+}
+
+
+exports.findAllLocaitonsOfCustomer = async (req, res) => {
+
+  try{
+
+  const email = req.email;
+  const { id } = req.query;
+  if(!id){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, 'CustomerId is not provided', false)
+  }
+  const customerLocations = await commonService.findAllLocationsOfCustomer(email, id);
+  if(!customerLocations.message){
+    return response(req, res, customerLocations, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
+  }
+  return response(req, res, null, StatusCodes.OK, customerLocations.message, false)
+
+  }catch(err){
+    console.log('Error while finding all locations of customer by admin', err);
     return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 
