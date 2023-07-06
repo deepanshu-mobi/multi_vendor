@@ -682,7 +682,7 @@
     },
     "/v1/customer/locations": {
       "get": {
-        "summary": "admin or owner can get customer locations",
+        "summary": "owner can get locations",
         "tags": ["Customer"],
         "parameters": [
           {
@@ -768,6 +768,38 @@
           }
         }
       }
+    },
+    "/v1/user/customer_locations": {
+      "get": {
+        "summary": "admin can get all locations of customer with the help of customerId",
+        "tags": ["User"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "Customer Id",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }      
     }
   }
 }

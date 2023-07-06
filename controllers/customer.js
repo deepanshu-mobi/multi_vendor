@@ -134,9 +134,7 @@ exports.findAllLocaitons = async (req, res) => {
   try{
 
   const email = req.email;
-  const { id } = req.query;
-
-  const customerLocations = await commonService.findAllLocationsOfCustomer(email, id);
+  const customerLocations = await commonService.findAllLocationsOfCustomer(email);
   if(!customerLocations.message){
     return response(req, res, customerLocations, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
   }
