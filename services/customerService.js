@@ -1,4 +1,4 @@
-const { Customer, CustomerAccessToken, Cart, CartProduct, Product } = require("../models");
+const { Customer, CustomerAccessToken, Cart, CartProduct, Product, CustomerLocation } = require("../models");
 const bcrypt = require("bcryptjs");
 const serverConfig = require("../config/server.config");
 const jwt = require("jsonwebtoken");
@@ -68,9 +68,81 @@ const updateProductQuantity = async (body, email) => {
   return customerCartUpdated;
 }
 
+const addNewLocation = async (body, email) => {
+
+  const { locationName, pin, isPrimary, country, city, state } = body;
+
+  const { customerId } = await Customer.findOne({ where: { email } });
+
+  if(isPrimary == 1) {
+    const customerLocations = await CustomerLocation.findAll({ where: { customerId } });
+    if(customerLocations){
+      customerLocations.forEach(async (item) => {
+        if(item.isPrimary == 1){
+          await item.update({isPrimary: 0})
+        }
+      })
+      const customerLocation = await CustomerLocation.create({
+        locationName,
+        pin,
+        isPrimary,
+        country,
+        city,
+        state,
+        customerId
+    })
+    return customerLocation
+    }
+    const customerLocation = await CustomerLocation.create({
+      locationName,
+      pin,
+      isPrimary,
+      country,
+      city,
+      state,
+      customerId
+  })
+    return customerLocation;
+  }
+}
+
+const updateCustomerLocation = async (body, email , customerLocationId) => {
+
+    //edit location;
+    const { customerId } = await Customer.findOne({ where: { email } })
+    let  customerLocation = await CustomerLocation.findOne({ where: { customerId, customerLocationId }})
+    const { locationName, pin, isPrimary, country, city, state } = body;
+    const updateBody = {
+      locationName, 
+      pin, 
+      isPrimary, 
+      country, 
+      city, 
+      state
+    }
+    if(isPrimary == 1) {
+      const customerLocations = await CustomerLocation.findAll({ where: { customerId } });
+      if(customerLocations){
+        customerLocations.forEach(async (item) => {
+          if(item.isPrimary == 1){
+            await item.update({isPrimary: 0})
+          }
+        })
+      await customerLocation.update(updateBody)
+      customerLocation = await CustomerLocation.findOne({ where: { customerId, customerLocationId }});
+      return customerLocation;
+      }
+    }
+    await customerLocation.update(updateBody)
+    customerLocation = await CustomerLocation.findOne({ where: { customerId, customerLocationId }});
+    return customerLocation;
+}
+
 module.exports = {
   createCustomer,
   loginCustomer,
   customerAccessTokenTable,
   updateProductQuantity,
+  addNewLocation,
+  updateCustomerLocation,
 };
