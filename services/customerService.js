@@ -91,19 +91,20 @@ const addNewLocation = async (body, email) => {
         state,
         customerId
     })
+    console.log('customerLocation is primary',customerLocation)
     return customerLocation
     }
-    const customerLocation = await CustomerLocation.create({
-      locationName,
-      pin,
-      isPrimary,
-      country,
-      city,
-      state,
-      customerId
-  })
-    return customerLocation;
   }
+  const customerLocation = await CustomerLocation.create({
+    locationName,
+    pin,
+    isPrimary,
+    country,
+    city,
+    state,
+    customerId
+})
+  return customerLocation;
 }
 
 const updateCustomerLocation = async (body, email , customerLocationId) => {

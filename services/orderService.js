@@ -1,14 +1,15 @@
 const { Order, Cart, Product, CartProduct, OrderProduct } = require('../models');
-const constant = require('../utils/constant')
+const constant = require('../utils/constant');
+const customerService = require('./customerService')
 
 const createOrder = async (customerId) => {
 
     const cartProduct = await Cart.findOne({ where: { customerId }, include: {model: CartProduct, include: {model: Product, attributes: ['productName', 'price'] }}});
 
-
-    let totalPrice = cartProduct.totalPrice;
+    let totalPrice = 0;
     let productDetails = []
     cartProduct.cart_products.forEach(item => {
+        totalPrice += item.price
         productDetails.push({
             productId: item.productId,
             productName: item.Product.productName,
@@ -25,25 +26,24 @@ const createOrder = async (customerId) => {
     return { orderDetail, productDetails }
 };
 
-const updateOrderBySession = async (session) => {
+const updateOrderBySession = async (session, email) => {
 
     const address = session.shipping_details.address
-
     const addressDetails = {
-        shippingAddressCity: address.city,
-        shippingAddressCountry: address.country,
-        shippingAddressLine1: address.line1,
-        shippingAddressLine2: address.line2,
-        shippingAddressPostalCode: address.postal_code,
-        shippingAddressState: address.state
+        city: address.city,
+        country: address.country,
+        locationName: address.line1,
+        // shippingAddressLine2: address.line2,
+        pin: address.postal_code,
+        state: address.state
     }
-
+    const customerLocation = await customerService.addNewLocation({...addressDetails}, email)
     let orderStatus;
     if(session.payment_status == 'paid'){
         const order = await Order.findOne({ where: { stripeSessionId: session.id }});
         if(order){
             orderStatus = constant.OrderStatus.APPROVED
-            await order.update({orderStatus, ...addressDetails})
+            await order.update({orderStatus, customerLocationId: customerLocation.customerLocationId })
         }
     }
 }
