@@ -1,11 +1,12 @@
 const customerService = require('../services/customerService');
+const commonService = require('../services/commonService');
 const { Customer } = require('../models');
 const { StatusCodes } = require('http-status-codes');
 const jwt = require('jsonwebtoken');
 const serverConfig = require('../config/server.config');
 const bcrypt = require('bcryptjs');
 const { response } = require('../utils/commonRes')
-const constant = require('../utils/constant')
+const constant = require('../utils/constant');
 
 exports.register = async (req, res) => {
   try{
@@ -106,6 +107,62 @@ exports.updateCartProductQuantity = async (req, res) => {
   
 }catch(err){
   console.log('Error while updating product quantity', err);
+  return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+}
+}
+
+
+
+exports.addNewCustomerLocation = async (req, res) => {
+  
+  try{
+
+  const email = req.email;
+  const customerLocation = await customerService.addNewLocation(req.body, email);
+  return response(req, res, customerLocation, StatusCodes.CREATED, constant.Message.SUCCESSFUL, true);
+
+  }catch(err){
+    console.log('Error while adding new location', err);
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+  }
+
+}
+
+
+exports.findAllLocaitons = async (req, res) => {
+
+  try{
+
+  const email = req.email;
+  const { id } = req.query;
+
+  const customerLocations = await commonService.findAllLocationsOfCustomer(email, id);
+  if(!customerLocations.message){
+    return response(req, res, customerLocations, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
+  }
+  return response(req, res, null, StatusCodes.OK, customerLocations.message, false)
+
+  }catch(err){
+    console.log('Error while finding all locations of customer', err);
+    return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+  }
+
+}
+
+
+exports.updateCustomerLocation = async (req, res) => {
+
+  try{
+  const email = req.email
+  const { id } = req.query;
+  if(!id){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, 'customerLocationId is not provided', false)
+  }
+  const updateLocation = await customerService.updateCustomerLocation(req.body, email, id);
+  return response(req, res, updateLocation, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
+
+}catch(err){
+  console.log('Error while updating customer location', err);
   return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 }
