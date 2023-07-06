@@ -1,4 +1,4 @@
-const { Order, Cart, Product, CartProduct, OrderProduct } = require('../models');
+const { Order, Cart, Product, CartProduct, OrderProduct, CustomerLocation } = require('../models');
 const constant = require('../utils/constant');
 const customerService = require('./customerService')
 
@@ -26,18 +26,9 @@ const createOrder = async (customerId) => {
     return { orderDetail, productDetails }
 };
 
-const updateOrderBySession = async (session, email) => {
+const updateOrderBySession = async (session, customerId) => {
 
-    const address = session.shipping_details.address
-    const addressDetails = {
-        city: address.city,
-        country: address.country,
-        locationName: address.line1,
-        // shippingAddressLine2: address.line2,
-        pin: address.postal_code,
-        state: address.state
-    }
-    const customerLocation = await customerService.addNewLocation({...addressDetails}, email)
+    const customerLocation = await CustomerLocation.findOne({ where: { customerId, isPrimary: 1}})
     let orderStatus;
     if(session.payment_status == 'paid'){
         const order = await Order.findOne({ where: { stripeSessionId: session.id }});
