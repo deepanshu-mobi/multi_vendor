@@ -22,8 +22,9 @@ exports.stripeWebhook = async (req, res) => {
         case 'checkout.session.completed': {
             const session = event.data.object;
             const customer = await stripe.customers.retrieve(session.customer)
+            const email = customer.email
             await Cart.destroy({ where : {customerId: customer.metadata.customerId }})
-            await orderService.updateOrderBySession(session)
+            await orderService.updateOrderBySession(session, email)
             console.log('checkout.session.completed', session);
             break;
         }
