@@ -93,7 +93,13 @@ exports.findAllProductsOfVendor = async (req, res) => {
 
   try{
   const { id } = req.query;
-  const vendors = await userService.findVendorProducts(id)
+  if(!id){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, 'VendorId is not provided', false)
+  }
+  const vendors = await userService.findVendorProducts(id);
+  if(!vendors.length){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, 'Not added any product yet', false)
+  }
   return response(req, res, vendors, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
   }catch(err){
     console.log('Error while finding vendor products', err);

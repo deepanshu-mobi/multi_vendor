@@ -315,6 +315,13 @@
             "description": "User token",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "vendorId",
+            "required": true,
+            "type": "integer"
           }
         ],
         "responses": {
