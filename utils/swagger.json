@@ -19,10 +19,6 @@
       "description": "Operation related to product"
     },
     {
-      "name": "Cart",
-      "description": "Operation related to cart"
-    },
-    {
       "name": "Payment",
       "description": "Operation related to payment"
     }
@@ -434,7 +430,7 @@
     "/v1/customer/cart": {
       "post": {
         "summary": "add product to cart",
-        "tags": ["Cart"],
+        "tags": ["Customer"],
         "requestBody": {
           "required": true,
           "content": {
@@ -481,7 +477,7 @@
     "/v1/customer/clear_cart": {
       "delete": {
         "summary": "clear all the product of cart",
-        "tags": ["Cart"],
+        "tags": ["Customer"],
         "parameters": [
           {
             "name": "access-token",
@@ -501,7 +497,7 @@
     "/v1/customer/delete_cart_product": {
       "delete": {
         "summary": "Delete cart product",
-        "tags": ["Cart"],
+        "tags": ["Customer"],
         "parameters": [
           {
             "name": "access-token",
