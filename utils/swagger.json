@@ -38,7 +38,7 @@
       "get": {
         "summary": "Get all customers and only admins can access this endPoint",
         "tags": ["User"],
-        "parameters":[
+        "parameters": [
           {
             "name": "access-token",
             "in": "header",
@@ -118,12 +118,7 @@
                     "example": "VENDOR"
                   }
                 },
-                "required":[
-                  "name",
-                  "email",
-                  "password",
-                  "role"
-                ]
+                "required": ["name", "email", "password", "role"]
               }
             }
           }
@@ -208,16 +203,12 @@
                     "example": "8574635278"
                   }
                 },
-                "required":[
-                  "name",
-                  "email",
-                  "password"
-                ]
+                "required": ["name", "email", "password"]
               }
             }
           }
         },
-        "responses":{
+        "responses": {
           "200": {
             "description": "Registered successfully"
           },
@@ -250,10 +241,7 @@
                     "example": "Example@12"
                   }
                 },
-                "required":[
-                  "email",
-                  "password"
-                ]
+                "required": ["email", "password"]
               }
             }
           }
@@ -298,7 +286,7 @@
       "get": {
         "summary": "Only admin can get all the vendors",
         "tags": ["User"],
-        "parameters":[
+        "parameters": [
           {
             "name": "access-token",
             "in": "header",
@@ -307,7 +295,7 @@
             "type": "string"
           }
         ],
-        "responses":{
+        "responses": {
           "200": {
             "description": "Successful response"
           },
@@ -324,7 +312,7 @@
       "get": {
         "summary": "fetch all products of vendor only admin allow to access this end point",
         "tags": ["User"],
-        "parameters":[
+        "parameters": [
           {
             "name": "access-token",
             "in": "header",
@@ -354,21 +342,19 @@
           "required": true,
           "content": {
             "application/json": {
-              "schema" : {
+              "schema": {
                 "type": "object",
                 "properties": {
                   "productId": {
                     "type": "integer"
                   }
                 },
-                "required": [
-                  "productId"
-                ]
+                "required": ["productId"]
               }
             }
           }
         },
-        "parameters":[
+        "parameters": [
           {
             "name": "access-token",
             "in": "header",
@@ -418,17 +404,12 @@
                     "format": "binary"
                   }
                 },
-                "required": [
-                  "productName",
-                  "description",
-                  "price",
-                  "image"
-                ]
+                "required": ["productName", "description", "price", "image"]
               }
             }
           }
         },
-        "parameters":[
+        "parameters": [
           {
             "name": "access-token",
             "in": "header",
@@ -453,7 +434,7 @@
     "/v1/customer/cart": {
       "post": {
         "summary": "add product to cart",
-        "tags":["Cart"],
+        "tags": ["Cart"],
         "requestBody": {
           "required": true,
           "content": {
@@ -470,10 +451,7 @@
                     "example": 3
                   }
                 },
-                "required": [
-                  "productId",
-                  "quantity"
-                ]
+                "required": ["productId", "quantity"]
               }
             }
           }
@@ -632,10 +610,152 @@
                     "type": "integer"
                   }
                 },
-                "required": [
-                  "productId",
-                  "quantity"
-                ]
+                "required": ["productId", "quantity"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/location": {
+      "post": {
+        "summary": "Add new location of customer",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string"
+                  },
+                  "pin": {
+                    "type": "integer"
+                  },
+                  "isPrimary": {
+                    "type": "integer"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  }
+                },
+                "required": ["locationName", "pin", "country", "city", "state"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/locations": {
+      "get": {
+        "summary": "admin or owner can get customer locations",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/v1/customer/location_update": {
+      "put": {
+        "summary": "update customer locations",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "User token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "locationid in query param",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locationName": {
+                    "type": "string"
+                  },
+                  "pin": {
+                    "type": "integer"
+                  },
+                  "isPrimary": {
+                    "type": "integer"
+                  },
+                  "country": {
+                    "type": "string"
+                  },
+                  "city": {
+                    "type": "string"
+                  },
+                  "state": {
+                    "type": "string"
+                  }
+                },
+                "required": ["locationName", "pin", "country", "city", "state"]
               }
             }
           }
