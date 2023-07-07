@@ -91,7 +91,7 @@ const addNewLocation = async (body, email) => {
         state,
         customerId
     })
-    console.log('customerLocation is primary',customerLocation)
+    
     return customerLocation
     }
   }

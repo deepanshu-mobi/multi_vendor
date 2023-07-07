@@ -63,7 +63,7 @@ exports.createCheckoutSession = async (req, res) => {
 
     const currency = 'inr'  
     const { orderDetail, productDetails } = await orderService.createOrder(customerId);
-    if(productDetails.length <=0){
+    if(productDetails.length <= 0){
         return response(req, res, null, StatusCodes.BAD_REQUEST, 'Cart is empty', false)
     }
     const stripeLineItems = productDetails.map((item) => {
@@ -96,7 +96,7 @@ exports.createCheckoutSession = async (req, res) => {
         success_url: 'https://mpbupdate.mobikasa.net',
         cancel_url: 'https://checkout.stripe.com/test/cancelled'
     });
-    await orderDetail.update({stripeSessionId: session.id})
+    await orderDetail.update({ stripeSessionId: session.id })
     return response(req, res, session.url, StatusCodes.OK, 'successfully created checkout session', true)
 }
 

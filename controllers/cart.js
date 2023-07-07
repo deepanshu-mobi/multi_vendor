@@ -8,10 +8,10 @@ exports.addToCart = async (req, res) => {
     try{
     const email = req.email
     const cart = await cartService.addingProductInCart(req.body, email);
-    return response(req, res, cart, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true)
+    return response(req, res, cart, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true);
     }catch(err){
         console.log('Error while creating cart', err);
-        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+        return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false);
     }
 }
 
@@ -19,9 +19,9 @@ exports.addToCart = async (req, res) => {
 exports.clearCart = async (req, res) => {
 
     try{
-
     const email = req.email
     const cartDetail = await cartService.deleteAllCartItems(email);
+
     if(cartDetail == 0){
         return response(req, res, null, StatusCodes.BAD_REQUEST, 'Cart is empty', false)    
     }

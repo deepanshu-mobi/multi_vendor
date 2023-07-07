@@ -71,7 +71,7 @@ exports.findCustomers = async (req, res) => {
   return response(req, res, customers, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
 
   }catch(err){
-    console.log('Error while findAll customers',err)
+    console.log('Error while findAll customers', err)
     return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 }
