@@ -49,7 +49,13 @@ exports.createCheckoutSession = async (req, res) => {
 
     const email = req.email;
 
-    const { customerId } = await Customer.findOne({ where: { email }})
+    const customers = await Customer.findOne({ where: { email }});
+
+    if(!customers){
+        return response(req, res, null, StatusCodes.BAD_REQUEST, 'CustomerId does not exist', false)
+    }
+
+    const customerId = customers.customerId;
     const customer = await stripe.customers.create({
         email: email,
         metadata: { customerId }
