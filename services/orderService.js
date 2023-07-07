@@ -1,6 +1,5 @@
 const { Order, Cart, Product, CartProduct, OrderProduct, CustomerLocation } = require('../models');
 const constant = require('../utils/constant');
-const customerService = require('./customerService')
 
 const createOrder = async (customerId) => {
 

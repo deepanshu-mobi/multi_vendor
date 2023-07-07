@@ -18,7 +18,7 @@ exports.register = async (req, res) => {
   };
   return response(req, res, resp, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true);
 }catch(err){
-  console.log('Error while registering customer',err)
+  console.log('Error while registering customer', err)
   return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 
@@ -44,7 +44,7 @@ exports.verifyEmail = async (req, res) => {
         res.render('templates/emailVerify', { message });
       });
     }catch(err){
-      console.log('Error while verifying Email',err);
+      console.log('Error while verifying Email', err);
       return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
     }
 
@@ -85,7 +85,7 @@ exports.login = async (req, res) => {
 
   return response(req, res, null, StatusCodes.BAD_REQUEST, constant.Message.USER_DOES_NOT_EXIST, false);
   }catch(err){
-    console.log('Error while loggin',err)
+    console.log('Error while loggin', err)
     return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
   }
 };

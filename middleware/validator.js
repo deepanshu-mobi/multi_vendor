@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator")
 const { StatusCodes } = require('http-status-codes')
-const { User, Customer } = require('../models')
+const { User } = require('../models')
 const constant = require('../utils/constant')
 const deleteImage = require('../utils/deleteImage')
 const { response } = require('../utils/commonRes')

@@ -1,7 +1,7 @@
 const customerController = require('../controllers/customer')
 const router = require('express').Router();
 const { validateRegistration, validateLogin } = require('../validation/customerValidation')
-const { expressValidator, isAdminOrCustomer } = require('../middleware/validator')
+const { expressValidator } = require('../middleware/validator')
 const { verifyToken } = require('../middleware/auth.jwt')
 
 router.post('/customer/register', validateRegistration, expressValidator, customerController.register);

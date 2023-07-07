@@ -21,7 +21,7 @@ exports.addProduct = async (req, res) => {
     }
     return response(req, res, resp, StatusCodes.CREATED, constant.Message.CREATED_SUCCESSFULLY, true)
 }catch(err){
-    console.log('Error while creating new product',err);
+    console.log('Error while creating new product', err);
     return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 }
