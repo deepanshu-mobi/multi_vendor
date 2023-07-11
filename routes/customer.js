@@ -11,6 +11,7 @@ router.get('/customer/verify/email', customerController.verifyEmail);
 router.put('/customer/cart/product', verifyToken, customerController.updateCartProductQuantity);
 router.post('/customer/location', verifyToken, customerController.addNewCustomerLocation);
 router.get('/customer/locations', verifyToken, customerController.findAllLocaitons);
-router.put('/customer/location_update', verifyToken, customerController.updateCustomerLocation)
+router.put('/customer/location_update', verifyToken, customerController.updateCustomerLocation);
+router.delete('/customer/location_delete', verifyToken, customerController.deleteLocation)
 
 module.exports = router
