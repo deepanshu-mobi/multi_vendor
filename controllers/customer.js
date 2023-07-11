@@ -119,6 +119,9 @@ exports.addNewCustomerLocation = async (req, res) => {
 
   const email = req.email;
   const customerLocation = await customerService.addNewLocation(req.body, email);
+  if(customerLocation.message){
+    return response(req, res, null, StatusCodes.OK, customerLocation.message, false);
+  }
   return response(req, res, customerLocation, StatusCodes.CREATED, constant.Message.SUCCESSFUL, true);
 
   }catch(err){
@@ -161,6 +164,26 @@ exports.updateCustomerLocation = async (req, res) => {
 
 }catch(err){
   console.log('Error while updating customer location', err);
+  return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
+}
+}
+
+
+exports.deleteLocation = async (req, res) => {
+
+  try{
+  const { id } = req.query;
+  if(!id){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, 'customerLocationId is not provided', false)
+  }
+  const email = req.email
+  const location = await customerService.deleteLocationOfCustomer(id, email);
+  if(location.message){
+    return response(req, res, null, StatusCodes.BAD_REQUEST, location.message, false)
+  }
+  return response(req, res, null, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
+}catch(err){
+  console.log('Error while deleting customer location', err);
   return response(req, res, null, StatusCodes.INTERNAL_SERVER_ERROR, constant.Message.INTERNAL_SERVER_ERROR, false)
 }
 }
