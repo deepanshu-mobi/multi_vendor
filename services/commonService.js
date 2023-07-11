@@ -10,7 +10,7 @@ const findAllLocationsOfCustomer = async (email, id) => {
     if(customer){
         const customerLocations = await CustomerLocation.findAll({ where: { customerId: customer.customerId }});
         if(!customerLocations || customerLocations.length === 0){
-            return { message: 'Customer does not have any preferred location' }
+            return { message: 'No records found' }
         }
         return customerLocations;
     }
@@ -18,7 +18,7 @@ const findAllLocationsOfCustomer = async (email, id) => {
         if(id){
             const customerLocations = await CustomerLocation.findAll({ where: { customerId: id }});
             if(!customerLocations || customerLocations.length === 0){
-                return { message: 'Customer does not have any preferred location' }
+                return { message: 'No records found' }
             }
             return customerLocations;
         }
