@@ -807,6 +807,39 @@
           }
         }
       }      
+    },
+    "/v1/customer/location_delete": {
+      "delete": {
+        "summary": "delete specific customer location",
+        "tags": ["Customer"],
+        "parameters": [
+          {
+            "name": "access-token",
+            "in": "header",
+            "description": "Customer access token",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "customerLocationId",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid request payload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
     }
   }
 }

@@ -74,8 +74,20 @@ const addNewLocation = async (body, email) => {
 
   const { customerId } = await Customer.findOne({ where: { email } });
 
+  const customerLocations = await CustomerLocation.findAll({ where: { customerId } });
+  let locationWithPin = false
+  if(customerLocations.length != 0){
+    customerLocations.forEach((item) => {
+      if(locationName == item.locationName && pin == item.pin){
+        locationWithPin = true
+      }
+    })
+    console.log(locationWithPin)
+    if(locationWithPin === true){
+      return { message: 'location name with this pin exist already' }
+    }
+  }
   if(isPrimary == 1) {
-    const customerLocations = await CustomerLocation.findAll({ where: { customerId } });
     if(customerLocations){
       customerLocations.forEach(async (item) => {
         if(item.isPrimary == 1){
@@ -139,6 +151,16 @@ const updateCustomerLocation = async (body, email , customerLocationId) => {
     return customerLocation;
 }
 
+const deleteLocationOfCustomer = async (customerLocationId, email) => {
+
+  const { customerId } = await Customer.findOne({ where: { email }})
+  const customerLocation = await CustomerLocation.destroy({ where: { customerId, customerLocationId }});
+  if(!customerLocation){
+    return { message: 'location \doesn\'t exist' }
+  }
+  return customerLocation;
+}
+
 module.exports = {
   createCustomer,
   loginCustomer,
@@ -146,4 +168,5 @@ module.exports = {
   updateProductQuantity,
   addNewLocation,
   updateCustomerLocation,
+  deleteLocationOfCustomer,
 };

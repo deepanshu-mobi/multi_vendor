@@ -137,7 +137,7 @@ exports.findAllLocaitonsOfCustomer = async (req, res) => {
   if(!customerLocations.message){
     return response(req, res, customerLocations, StatusCodes.OK, constant.Message.SUCCESSFUL, true)
   }
-  return response(req, res, null, StatusCodes.OK, customerLocations.message, false)
+  return response(req, res, null, StatusCodes.OK, customerLocations.message, true)
 
   }catch(err){
     console.log('Error while finding all locations of customer by admin', err);
